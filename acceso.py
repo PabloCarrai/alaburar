@@ -8,7 +8,7 @@ class acceso:
         self.ventana.title("Bienvenido a AlAburaR")
         self.labelframe = LabelFrame(self.ventana, text="Credenciales")
         self.labelframe.grid(column=0, row=0, padx=10, pady=10)
-        self.etiquetaNombreUsuario = Label(self.labelframe, text="Nombre de Usuario")
+        self.etiquetaNombreUsuario = Label(self.labelframe, text="Usuario")
         self.etiquetaNombreUsuario.grid(column=0, row=0, padx=10, pady=10)
         self.datoEntradaNombreUsuario = StringVar()
         self.entradaNombreUsuario = Entry(
@@ -19,7 +19,53 @@ class acceso:
         self.etiquetaClaveUsuario = Label(self.labelframe, text="Clave")
         self.etiquetaClaveUsuario.grid(column=0, row=1, padx=10, pady=10)
 
+        self.datoEntradaClaveUsuario = StringVar()
+        self.entradaClaveUsuario = Entry(
+            self.labelframe, textvariable=self.datoEntradaClaveUsuario
+        )
+        self.entradaClaveUsuario.grid(column=1, row=1, padx=10, pady=10)
+        self.botonIngresar = Button(self.labelframe, text="Ingresar")
+        self.botonIngresar.grid(column=0, row=2, padx=5, pady=5)
+
+        self.botonRegistrar = Button(
+            self.labelframe, text="Registrarse", command=self.registrarUsuario
+        )
+        self.botonRegistrar.grid(column=1, row=2, padx=5, pady=5)
+
         self.ventana.mainloop()
+
+    def registrarUsuario(self):
+        self.ventanaRegistrarUsuario = Toplevel()
+        self.ventanaRegistrarUsuario.title("Ventana de Registro de Usuario")
+        self.ventanaRegistrarUsuario.geometry("300x250")
+
+        self.labelframeRegistroUsuario = LabelFrame(
+            self.ventanaRegistrarUsuario, text="Registro de Usuario"
+        )
+        self.labelframeRegistroUsuario.grid(column=0, row=0, padx=10, pady=10)
+
+        self.etiquetaRegistroUsuarioNombre = Label(
+            self.labelframeRegistroUsuario, text="Nombre"
+        )
+        self.etiquetaRegistroUsuarioNombre.grid(column=0, row=0, padx=10, pady=10)
+
+        self.datoEntradaRegistroUsuarioNombre = StringVar()
+        self.entradaRegistroUsuarioNombre = Entry(
+            self.labelframeRegistroUsuario,
+            textvariable=self.datoEntradaRegistroUsuarioNombre,
+        )
+        self.entradaRegistroUsuarioNombre.grid(column=1, row=0, padx=10, pady=10)
+
+        self.etiquetaRegistroUsuarioMail = Label(
+            self.labelframeRegistroUsuario, text="Correo"
+        )
+        self.etiquetaRegistroUsuarioMail.grid(column=0, row=1, padx=10, pady=10)
+        self.datoEntradaRegistroUsuarioMail=StringVar()
+        self.entradaRegistroUsuarioMail=Entry(self.labelframeRegistroUsuario,textvariable=self.datoEntradaRegistroUsuarioMail)
+        self.entradaRegistroUsuarioMail.grid(column=1,row=1, padx=10, pady=10)
+
+        self.etiquetaRegistroUsuarioClave=Label(self.labelframeRegistroUsuario,text="Clave")
+        self.etiquetaRegistroUsuarioClave.grid(column=0,row=2, padx=10, pady=10)
 
 
 acceso = acceso()
