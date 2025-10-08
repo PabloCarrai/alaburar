@@ -67,5 +67,19 @@ class acceso:
         self.etiquetaRegistroUsuarioClave=Label(self.labelframeRegistroUsuario,text="Clave")
         self.etiquetaRegistroUsuarioClave.grid(column=0,row=2, padx=10, pady=10)
 
+        self.datoEntradaRegistroUsuarioClave=StringVar()
+        self.entradaRegistroUsuarioClave=Entry(self.labelframeRegistroUsuario,textvariable=self.datoEntradaRegistroUsuarioClave)
+        self.entradaRegistroUsuarioClave.grid(column=1,row=2, padx=10, pady=10)
+
+        self.etiquetaRegistroUsuarioClaveReingreso=Label(self.labelframeRegistroUsuario,text="Clave")
+        self.etiquetaRegistroUsuarioClaveReingreso.grid(column=0,row=3, padx=10, pady=10)
+
+        self.datoEntradaRegistroUsuarioClave1=StringVar()
+        self.entradaRegistroUsuarioClave1=Entry(self.labelframeRegistroUsuario,textvariable=self.datoEntradaRegistroUsuarioClave1)
+        self.entradaRegistroUsuarioClave1.grid(column=1,row=3, padx=10, pady=10)
+
+        self.botonRegistroUsuarioRegistrar=Button(self.labelframeRegistroUsuario,text="Registrar")
+        self.botonRegistroUsuarioRegistrar.grid(column=1,row=4, padx=10, pady=10)
+
 
 acceso = acceso()
