@@ -52,6 +52,7 @@ class acceso:
         resultado=conexion.consultarUsuario((nombre,))
         for e in resultado:
             print(e)
+        
 
     def registrarUsuario(self):
         self.ventanaRegistrarUsuario = Toplevel()
