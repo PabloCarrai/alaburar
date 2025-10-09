@@ -2,12 +2,14 @@ from tkinter import *
 from tkinter import ttk
 import gestordb
 from tkinter import messagebox as ms
+from tkcalendar import DateEntry
+from datetime import date
 
 
 class acceso:
     def __init__(self):
+        self.idusuarioSesion = ""
         self.usuarioSesion = ""
-        self.claveSesion = ""
 
         self.ventana = Tk()
         self.ventana.title("Bienvenido a AlAburaR")
@@ -50,14 +52,97 @@ class acceso:
         print(nombre, clave)
         conexion = gestordb.gestordb()
         resultado = conexion.consultarUsuario((nombre,))
-        for e in resultado:
-            print(e)
+        for fila in resultado:
+            #   Necesito guardar datos de sesion
+            self.usuarioSesion = fila[1]
+            self.idusuarioSesion = fila[0]
+        print("Bienvenido")
+        print(self.idusuarioSesion, self.usuarioSesion)
+        self.ventanaPrincipalUsuarioRegistrado = Toplevel(self.ventana)
+        self.ventanaPrincipalUsuarioRegistrado.title(f"Bienvenido {self.usuarioSesion}")
+        self.notebookPrincipalUsuarioRegistrado = ttk.Notebook(
+            self.ventanaPrincipalUsuarioRegistrado
+        )
+        self.notebookPrincipalUsuarioRegistrado.grid(padx=10, pady=10)
+
+        self.frame1 = Frame(self.notebookPrincipalUsuarioRegistrado)
+        self.labelframePrincipalUsuarioRegistrado = LabelFrame(
+            self.frame1, text="Creacion de tarea"
+        )
+        self.labelframePrincipalUsuarioRegistrado.grid(padx=10, pady=10)
+
+        """  la tarea tiene que tener 
+        titulo, 
+        descripcion 
+        fecha_vencimiento 
+        id_creador == self.idusuarioSesion
+        id_asignado
+        id_estado
+        id_prioridad  """
+
+        self.etiquetaTituloLabelFramePrincipalUsuarioRegistrado = Label(
+            self.labelframePrincipalUsuarioRegistrado, text="Titulo"
+        )
+        self.etiquetaTituloLabelFramePrincipalUsuarioRegistrado.grid(column=0, row=0)
+
+        self.datoEntradaTituloLabelFramePrincipalUsuarioRegistrado = StringVar()
+        self.entradaTituloLabelFramePrincipalUsuarioRegistrado = Entry(
+            self.labelframePrincipalUsuarioRegistrado,
+            textvariable=self.datoEntradaTituloLabelFramePrincipalUsuarioRegistrado,
+        )
+        self.entradaTituloLabelFramePrincipalUsuarioRegistrado.grid(column=1, row=0)
+        self.etiquetaDescripcionLabelFramePrincipalUsuarioRegistrado = Label(
+            self.labelframePrincipalUsuarioRegistrado, text="Descripcion"
+        )
+        self.etiquetaDescripcionLabelFramePrincipalUsuarioRegistrado.grid(
+            column=0,
+            row=1,
+        )
+        self.entradaDescripcionLabelFramePrincipalUsuarioRegistrado = Text(
+            self.labelframePrincipalUsuarioRegistrado, width=20, height=10
+        )
+        self.entradaDescripcionLabelFramePrincipalUsuarioRegistrado.grid(
+            column=1, row=1
+        )
+
+        self.etiquetaFechaVencimientoLabelFramePrincipalUsuarioRegistrado = Label(
+            self.labelframePrincipalUsuarioRegistrado, text="Fecha Vencimiento"
+        )
+        self.etiquetaFechaVencimientoLabelFramePrincipalUsuarioRegistrado.grid(
+            column=0, row=2
+        )
+        self.dateEntryFechaVencimientoLabelFramePrincipalUsuarioRegistrado = DateEntry(
+            self.labelframePrincipalUsuarioRegistrado, width=12
+        )
+        self.dateEntryFechaVencimientoLabelFramePrincipalUsuarioRegistrado.grid(
+            column=1, row=2
+        )
+
+        self.comboboxDatoId_AsignadoLabelFramePrincipalUsuarioRegistrado = StringVar()
+        self.comboboxComboDatoId_AsignadoLabelFramePrincipalusuarioRegistrado = ttk.Combobox(
+            self.labelframePrincipalUsuarioRegistrado,
+            width=12,
+            textvariable=self.comboboxDatoId_AsignadoLabelFramePrincipalUsuarioRegistrado,
+        )
+        self.comboboxComboDatoId_AsignadoLabelFramePrincipalusuarioRegistrado.grid(
+            column=1, row=3
+        )
+
+        self.frame2 = Frame(self.notebookPrincipalUsuarioRegistrado)
+        self.frame3 = Frame(self.notebookPrincipalUsuarioRegistrado)
+
+        self.notebookPrincipalUsuarioRegistrado.add(
+            self.frame1, text="Creacion de Tarea"
+        )
+
+        self.notebookPrincipalUsuarioRegistrado.add(self.frame2, text="Tab2")
+        self.notebookPrincipalUsuarioRegistrado.add(self.frame3, text="Tab3")
 
     def registrarUsuario(self):
+        """Esta es la venta de registro de Usuarios."""
         self.ventanaRegistrarUsuario = Toplevel(self.ventana)
         self.ventanaRegistrarUsuario.title("Ventana de Registro de Usuario")
         self.ventanaRegistrarUsuario.geometry("300x250")
-
         self.labelframeRegistroUsuario = LabelFrame(
             self.ventanaRegistrarUsuario, text="Registro de Usuario"
         )

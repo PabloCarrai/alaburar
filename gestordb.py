@@ -16,18 +16,26 @@ class gestordb:
         except mysql.connector.Error as error:
             print(error)
 
-    def consultarUsuario(self,datos):
-        conexion=self.abrirconexion()
-        mycursor=conexion.cursor()
-        sql="select * from usuarios where nombre=%s"
-        mycursor.execute(sql,datos)
+    def consultarUsuario(self, datos):
+        conexion = self.abrirconexion()
+        mycursor = conexion.cursor()
+        sql = "select * from usuarios where nombre=%s"
+        mycursor.execute(sql, datos)
         return mycursor
         conexion.close()
 
-    def insertarUsuario(self,datos):
-        conexion=self.abrirconexion()
-        mycursor=conexion.cursor()
-        sql="insert into usuarios(nombre,email,contrasena) values(%s,%s,%s)"
-        mycursor.execute(sql,datos)
+    def insertarUsuario(self, datos):
+        conexion = self.abrirconexion()
+        mycursor = conexion.cursor()
+        sql = "insert into usuarios(nombre,email,contrasena) values(%s,%s,%s)"
+        mycursor.execute(sql, datos)
         conexion.commit()
+        conexion.close()
+
+    def consultarId(self, datos):
+        conexion = self.abrirconexion()
+        mycursor = conexion.cursor()
+        sql = "select nombre from usuarios where nombre=%s"
+        mycursor.execute(sql, datos)
+        return mycursor
         conexion.close()
