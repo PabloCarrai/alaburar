@@ -42,20 +42,19 @@ class acceso:
         self.ventana.mainloop()
 
     def ingresar(self):
-        """ Aca hay que hacer bien el metodo, esto por ahora es prueba """
+        """Aca hay que hacer bien el metodo, esto por ahora es prueba"""
         nombre = self.datoEntradaNombreUsuario.get()
         self.usuarioSesion = nombre
         clave = self.datoEntradaClaveUsuario.get()
         self.claveSesion = clave
         print(nombre, clave)
         conexion = gestordb.gestordb()
-        resultado=conexion.consultarUsuario((nombre,))
+        resultado = conexion.consultarUsuario((nombre,))
         for e in resultado:
             print(e)
-        
 
     def registrarUsuario(self):
-        self.ventanaRegistrarUsuario = Toplevel()
+        self.ventanaRegistrarUsuario = Toplevel(self.ventana)
         self.ventanaRegistrarUsuario.title("Ventana de Registro de Usuario")
         self.ventanaRegistrarUsuario.geometry("300x250")
 
@@ -114,26 +113,24 @@ class acceso:
         self.entradaRegistroUsuarioClave1.grid(column=1, row=3, padx=10, pady=10)
 
         self.botonRegistroUsuarioRegistrar = Button(
-            self.labelframeRegistroUsuario, text="Registrar",command=self.insertarUsuariodb
+            self.labelframeRegistroUsuario,
+            text="Registrar",
+            command=self.insertarUsuariodb,
         )
         self.botonRegistroUsuarioRegistrar.grid(column=1, row=4, padx=10, pady=10)
 
-
     def insertarUsuariodb(self):
-        nombre=self.datoEntradaRegistroUsuarioNombre.get()
-        correo=self.datoEntradaRegistroUsuarioMail.get()
-        clave=self.datoEntradaRegistroUsuarioClave.get()        
+        nombre = self.datoEntradaRegistroUsuarioNombre.get()
+        correo = self.datoEntradaRegistroUsuarioMail.get()
+        clave = self.datoEntradaRegistroUsuarioClave.get()
         conexion = gestordb.gestordb()
-        datos=(nombre,correo,clave)
+        datos = (nombre, correo, clave)
         conexion.insertarUsuario(datos)
-        self.entradaRegistroUsuarioNombre.delete(0,END)
-        self.entradaRegistroUsuarioMail.delete(0,END)
-        self.entradaRegistroUsuarioClave.delete(0,END)
-        self.entradaRegistroUsuarioClave1.delete(0,END)
-        ms.showinfo("Registro de usuario Exitoso","Vamos carajo")        
-
-        
-
+        self.entradaRegistroUsuarioNombre.delete(0, END)
+        self.entradaRegistroUsuarioMail.delete(0, END)
+        self.entradaRegistroUsuarioClave.delete(0, END)
+        self.entradaRegistroUsuarioClave1.delete(0, END)
+        ms.showinfo("Registro de usuario Exitoso", "Vamos carajo")
 
 
 acceso = acceso()
