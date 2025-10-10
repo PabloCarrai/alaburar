@@ -46,11 +46,47 @@ class acceso:
         #   Boton Ingresar Pantalla Login
         self.botonIngresarPantallaLogin.grid(column=0, row=3, padx=10, pady=10)
         self.botonRegistrarUsuarioPantallaLogin = Button(
-            self.labelFramePantallaLogin, text="Registrarse"
+            self.labelFramePantallaLogin,
+            text="Registrarse",
+            command=self.pantallaRegistroUsuario,
         )
         self.botonRegistrarUsuarioPantallaLogin.grid(column=1, row=3, padx=10, pady=10)
 
         self.ventana.mainloop()
+
+    def pantallaRegistroUsuario(self):
+        #   Levantamos una pantalla para el login
+        self.ventanaRegistroUsuario = Toplevel(self.ventana)
+        #   Seteamos un titulo
+        self.ventanaRegistroUsuario.title("Registro de Usuario")
+        #   Le agregamos un labelframe
+        self.labelFramePantallaRegistroUsuario = LabelFrame(
+            self.ventanaRegistroUsuario, text="Registro:"
+        )
+        #   Creamos el label nombre para la pantalla registro de usuario
+        self.labelFramePantallaRegistroUsuario.grid(column=0, row=0, padx=10, pady=10)
+        self.etiquetaNombrePantallaRegistroUsuario = Label(
+            self.labelFramePantallaRegistroUsuario, text="Nombre"
+        )
+        self.etiquetaNombrePantallaRegistroUsuario.grid(
+            column=0, row=0, padx=10, pady=10
+        )
+        #   Creamos un stringvar y una entrada para el nombre
+        self.datoEntradaNombrePantallaRegistroUsuario = StringVar()
+        self.entradaNombrePantallaRegistroUsuario = Entry(
+            self.labelFramePantallaRegistroUsuario,
+            textvariable=self.datoEntradaNombrePantallaRegistroUsuario,
+        )
+        self.entradaNombrePantallaRegistroUsuario.grid(
+            column=1, row=0, padx=10, pady=10
+        )
+        #   Etiqueta para el correo en el registro de usuario
+        self.etiquetaCorreoPantallaRegistroUsuario = Label(
+            self.labelFramePantallaRegistroUsuario, text="Correo"
+        )
+        self.etiquetaCorreoPantallaRegistroUsuario.grid(
+            column=0, row=1, padx=10, pady=10
+        )
 
     def existeUsuario(self):
         correo = self.datoEntradaCorreoPantallaLogin.get()
