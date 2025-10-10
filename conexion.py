@@ -34,11 +34,20 @@ class conexion:
     #         conexion.close()
 
     def consultarUsuario(self, datos):
+        #   Uso try por si falla algo
         try:
+            #   Llamo a la apertura de la conexion
             conexion = self.abrir()
+            #   Genero un cursos de la conexion
             mycursor = conexion.cursor()
-            sql = "select * from usuarios where nombre=%s"
+            #   Hago la consulta a la db(en realidad la sql que voy a usar)
+            sql = "select * from usuarios where email=? and contrasena=?"
+            #   Ahora si, corro la sentencia sql y uso los datos sobre la consulta
             mycursor.execute(sql, datos)
-            return mycursor
+            #   Guardo los resultados en info
+            info = mycursor.fetchall()
+            #   devuelvo info
+            return info
         finally:
+            #   Cierro la conexion
             conexion.close()

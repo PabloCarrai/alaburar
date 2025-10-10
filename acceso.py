@@ -37,10 +37,11 @@ class acceso:
         self.entradaClavePantallaLogin = Entry(
             self.labelFramePantallaLogin,
             textvariable=self.datoEntradaClavePantallaLogin,
+            show="*",
         )
         self.entradaClavePantallaLogin.grid(column=1, row=2, padx=10, pady=10)
         self.botonIngresarPantallaLogin = Button(
-            self.labelFramePantallaLogin, text="Ingresar"
+            self.labelFramePantallaLogin, text="Ingresar", command=self.existeUsuario
         )
         #   Boton Ingresar Pantalla Login
         self.botonIngresarPantallaLogin.grid(column=0, row=3, padx=10, pady=10)
@@ -50,6 +51,14 @@ class acceso:
         self.botonRegistrarUsuarioPantallaLogin.grid(column=1, row=3, padx=10, pady=10)
 
         self.ventana.mainloop()
+
+    def existeUsuario(self):
+        correo = self.datoEntradaCorreoPantallaLogin.get()
+        clave = self.datoEntradaClavePantallaLogin.get()
+        datos = (correo, clave)
+        print(correo, clave)
+        resultados = self.conexion.consultarUsuario(datos)
+        print(len(resultados))
 
 
 aplicacion = acceso()
