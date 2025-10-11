@@ -207,10 +207,6 @@ class acceso:
         self.labelframeDatosDeSesion = LabelFrame(self.frame1, text="Datos de Session")
         self.labelframeDatosDeSesion.grid(column=0, row=0, padx=10, pady=10)
 
-
-
-
-
         #   Agrego una etiqueta id Usuario
         self.etiquetaidUsuarioLogueadoLabelFrameDatosDeSesion = Label(
             self.labelframeDatosDeSesion, text="Id:"
@@ -219,27 +215,60 @@ class acceso:
             column=0, row=0, padx=10, pady=10
         )
         #   Etiqueta con el dato del id del usuario logueado
-        self.datoetiquetaidUsuarioLogueadoLabelFrameDatoDeSesion=Label(self.labelframeDatosDeSesion,text=self.idUsuarioLogueado)
-        self.datoetiquetaidUsuarioLogueadoLabelFrameDatoDeSesion.grid(column=1,row=0,padx=10,pady=10)
-        
+        self.datoetiquetaidUsuarioLogueadoLabelFrameDatoDeSesion = Label(
+            self.labelframeDatosDeSesion, text=self.idUsuarioLogueado
+        )
+        self.datoetiquetaidUsuarioLogueadoLabelFrameDatoDeSesion.grid(
+            column=1, row=0, padx=10, pady=10
+        )
+
         #   Aca va la etiqueda del nombre
-        self.etiquetaNombreUsuarioLogueadoLabelFrameDatoDeSesion=Label(self.labelframeDatosDeSesion,text="Nombre:")
-        self.etiquetaNombreUsuarioLogueadoLabelFrameDatoDeSesion.grid(column=0,row=2,padx=10,pady=10)
+        self.etiquetaNombreUsuarioLogueadoLabelFrameDatoDeSesion = Label(
+            self.labelframeDatosDeSesion, text="Nombre:"
+        )
+        self.etiquetaNombreUsuarioLogueadoLabelFrameDatoDeSesion.grid(
+            column=0, row=2, padx=10, pady=10
+        )
 
         #   Aca va la etiqueta con el dato nombre
-        self.datoNombreUsuarioLogueadoLabelFrameDatoDeSesion=Label(self.labelframeDatosDeSesion,text=self.nombreUsuarioLogueado)
-        self.datoNombreUsuarioLogueadoLabelFrameDatoDeSesion.grid(column=1,row=2,padx=10,pady=10)
+        self.datoNombreUsuarioLogueadoLabelFrameDatoDeSesion = Label(
+            self.labelframeDatosDeSesion, text=self.nombreUsuarioLogueado
+        )
+        self.datoNombreUsuarioLogueadoLabelFrameDatoDeSesion.grid(
+            column=1, row=2, padx=10, pady=10
+        )
 
         #   Aca va la etiqueta correo
-        self.etiquetaCorreoUsuarioLogueadoLabelFrameDatoDeSesion=Label(self.labelframeDatosDeSesion,text="Correo")
-        self.etiquetaCorreoUsuarioLogueadoLabelFrameDatoDeSesion.grid(column=0,row=3,padx=10,pady=10)
+        self.etiquetaCorreoUsuarioLogueadoLabelFrameDatoDeSesion = Label(
+            self.labelframeDatosDeSesion, text="Correo"
+        )
+        self.etiquetaCorreoUsuarioLogueadoLabelFrameDatoDeSesion.grid(
+            column=0, row=3, padx=10, pady=10
+        )
 
         #   Aca va el dato de la etiqueta Correo
-        self.datoCorreoUsuarioLogueadoLabelFrameDatoDeSesion=Label(self.labelframeDatosDeSesion,text=self.correoUsuarioLogueado)
-        self.datoCorreoUsuarioLogueadoLabelFrameDatoDeSesion.grid(column=1,row=3,padx=10,pady=10)
-        
+        self.datoCorreoUsuarioLogueadoLabelFrameDatoDeSesion = Label(
+            self.labelframeDatosDeSesion, text=self.correoUsuarioLogueado
+        )
+        self.datoCorreoUsuarioLogueadoLabelFrameDatoDeSesion.grid(
+            column=1, row=3, padx=10, pady=10
+        )
 
+        #   Aca defino los frame para cada seccion(Este es para cargar la tarea)
         self.frame2 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
+
+        #   Este es el labelframe para esta seccion(Carga de tarea)
+        self.labelframeCargaDeTareas = LabelFrame(self.frame2, text="Carga de Tareas")
+        self.labelframeCargaDeTareas.grid(column=0, row=0, padx=10, pady=10)
+
+        #   Etiqueta Titulo de la seccion Carga de Tarea
+        self.etiquetaTituloTareaLabelFrameCargaDeTareas = Label(
+            self.labelframeCargaDeTareas, text="Titulo"
+        )
+        self.etiquetaTituloTareaLabelFrameCargaDeTareas.grid(
+            column=0, row=0, padx=10, pady=10
+        )
+
         self.frame3 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
         self.frame4 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
         self.frame5 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
@@ -249,12 +278,13 @@ class acceso:
         self.notebookPantallaPrincipalUsuarioLogueado.add(
             self.frame1, text="Datos De Sesion"
         )
-        self.notebookPantallaPrincipalUsuarioLogueado.add(self.frame2, text="tab2")
+        self.notebookPantallaPrincipalUsuarioLogueado.add(
+            self.frame2, text="Carga De Tareas"
+        )
         self.notebookPantallaPrincipalUsuarioLogueado.add(self.frame3, text="tab3")
         self.notebookPantallaPrincipalUsuarioLogueado.add(self.frame4, text="tab4")
         self.notebookPantallaPrincipalUsuarioLogueado.add(self.frame5, text="tab5")
         self.notebookPantallaPrincipalUsuarioLogueado.add(self.frame6, text="tab6")
-
 
 
 aplicacion = acceso()
