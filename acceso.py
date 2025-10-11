@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 import conexion
 from tkinter import messagebox as ms
+from tkcalendar import DateEntry
 
 
 class acceso:
@@ -267,6 +268,27 @@ class acceso:
         )
         self.etiquetaTituloTareaLabelFrameCargaDeTareas.grid(
             column=0, row=0, padx=10, pady=10
+        )
+
+        self.datoEntradaTituloTareaLabelFrameCargaDeTareas=StringVar()
+        self.entradaTituloTareaLabelFrameCargaDeTareas=Entry(self.labelframeCargaDeTareas,textvariable=self.datoEntradaTituloTareaLabelFrameCargaDeTareas)
+        self.entradaTituloTareaLabelFrameCargaDeTareas.grid(column=1, row=0, padx=10, pady=10
+        )
+
+        self.etiquetaDescripcionTareaLabelFrameCargaDeTareas=Label(self.labelframeCargaDeTareas,text="Descripcion")
+        self.etiquetaDescripcionTareaLabelFrameCargaDeTareas.grid(column=0, row=2, padx=10, pady=10
+        )
+
+        self.textoDescripcionTareaLabelFrameCargaDeTareas=Text(self.labelframeCargaDeTareas,height=5,width=20)
+        self.textoDescripcionTareaLabelFrameCargaDeTareas.grid(column=1, row=2, padx=10, pady=10
+        )
+
+        self.etiquetaCalendarioTareaLabelFrameCargaDeTareas=Label(self.labelframeCargaDeTareas,text="Vencimiento")
+        self.etiquetaCalendarioTareaLabelFrameCargaDeTareas.grid(column=0, row=3, padx=10, pady=10
+        )
+
+        self.calendarioTareaLabelFrameCargaDeTareas=DateEntry(self.labelframeCargaDeTareas)
+        self.calendarioTareaLabelFrameCargaDeTareas.grid(column=1, row=3, padx=10, pady=10
         )
 
         self.frame3 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
