@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 import conexion
+from tkinter import messagebox as ms
 
 
 class acceso:
@@ -87,6 +88,53 @@ class acceso:
         self.etiquetaCorreoPantallaRegistroUsuario.grid(
             column=0, row=1, padx=10, pady=10
         )
+        #   Stringvar para entrada de correo en Registro Usuario
+        self.datoEntradaCorreoPantallaRegistroUsuario = StringVar()
+        self.entradaCorreoPantallaRegistroUsuario = Entry(
+            self.labelFramePantallaRegistroUsuario,
+            textvariable=self.datoEntradaCorreoPantallaRegistroUsuario,
+        )
+        self.entradaCorreoPantallaRegistroUsuario.grid(
+            column=1, row=1, padx=10, pady=10
+        )
+        #   Primer etiqueta para la clave(Son dos)
+        self.etiquetaClavePantallaRegistroUsuario = Label(
+            self.labelFramePantallaRegistroUsuario, text="Clave"
+        )
+        self.etiquetaClavePantallaRegistroUsuario.grid(
+            column=0, row=2, padx=10, pady=10
+        )
+        #   Stringvar para la entrada de la clave en pantalla registro usuario
+        self.datoEntradaClavePantallaRegistroUsuario = StringVar()
+        self.entradaClavePantallaRegistroUsuario = Entry(
+            self.labelFramePantallaRegistroUsuario,
+            textvariable=self.datoEntradaClavePantallaRegistroUsuario,
+        )
+        self.entradaClavePantallaRegistroUsuario.grid(column=1, row=2, padx=10, pady=10)
+        self.etiquetaClave1PantallaRegistroUsuario = Label(
+            self.labelFramePantallaRegistroUsuario, text="Clave"
+        )
+        self.etiquetaClave1PantallaRegistroUsuario.grid(
+            column=0, row=3, padx=10, pady=10
+        )
+
+        self.datoEntradaClave1PantallaRegistroUsuario = StringVar()
+        self.entradaClave1PantallaRegistroUsuario = Entry(
+            self.labelFramePantallaRegistroUsuario,
+            textvariable=self.datoEntradaClave1PantallaRegistroUsuario,
+        )
+        self.entradaClave1PantallaRegistroUsuario.grid(
+            column=1, row=3, padx=10, pady=10
+        )
+
+        self.botonRegistrarPantallaRegistroUsuario = Button(
+            self.labelFramePantallaRegistroUsuario,
+            text="Registrarse",
+            command=self.registrarUsuario,
+        )
+        self.botonRegistrarPantallaRegistroUsuario.grid(
+            column=1, row=4, padx=10, pady=10
+        )
 
     def existeUsuario(self):
         correo = self.datoEntradaCorreoPantallaLogin.get()
@@ -95,6 +143,22 @@ class acceso:
         print(correo, clave)
         resultados = self.conexion.consultarUsuario(datos)
         print(len(resultados))
+
+    def registrarUsuario(self):
+        nombre = self.datoEntradaNombrePantallaRegistroUsuario.get()
+        correo = self.datoEntradaCorreoPantallaRegistroUsuario.get()
+        clave = self.datoEntradaClavePantallaRegistroUsuario.get()
+        clave1 = self.datoEntradaClave1PantallaRegistroUsuario.get()
+        datos = (nombre, correo, clave)
+        if len(nombre) == 0 or len(correo) == 0 or len(clave) == 0 or len(clave1) == 0:
+            print("Esta vacio")
+            ms.showwarning("Error", "Hay campos vacios o mal cargados")
+        else:
+            if clave != clave1:
+                ms.showwarning("Error", "Ingresastes dos claves diferentes")
+            else:
+                self.conexion.registrarUsuario(datos)
+                ms.showinfo("Vamos", "Nuevo Usuario")
 
 
 aplicacion = acceso()

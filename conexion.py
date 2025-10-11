@@ -51,3 +51,20 @@ class conexion:
         finally:
             #   Cierro la conexion
             conexion.close()
+
+    def registrarUsuario(self, datos):
+        #   Uso try por si falla algo
+        try:
+            #   Llamo a la apertura de la conexion
+            conexion = self.abrir()
+            #   Genero un cursos de la conexion
+            mycursor = conexion.cursor()
+            #   Hago la consulta a la db(en realidad la sql que voy a usar)
+            sql = "insert into usuarios(nombre,email,contrasena) values(?,?,?)"
+            #   Ahora si, corro la sentencia sql y uso los datos sobre la consulta
+            mycursor.execute(sql, datos)
+            #   Hago los cambios
+            conexion.commit()
+        finally:
+            #   Cierro la conexion
+            conexion.close()
