@@ -3,6 +3,7 @@ from tkinter import ttk
 import conexion
 from tkinter import messagebox as ms
 from tkcalendar import DateEntry
+import sqlite3
 
 
 class acceso:
@@ -379,12 +380,12 @@ class acceso:
         #   Necesito sacar solo el valor
         id_UsuarioAsignado = respuestaIDDeUsuario[0][0]
 
-        datocomboPrioridad = self.datoComboBoxPrioridadLabelFrameCargaDeTarea.get
-
+        datocomboPrioridad = self.datoComboBoxPrioridadLabelFrameCargaDeTarea.get()
         respuestaIDPrioridad = self.conexion.obteneridprioridad((datocomboPrioridad,))
         print(respuestaIDDeUsuario)
-        # id_PrioridadAsignada = respuestaIDPrioridad[0][0]
+        id_PrioridadAsignada = respuestaIDPrioridad[0][0]
 
+        ###
         titulo = (self.datoEntradaTituloTareaLabelFrameCargaDeTareas.get(),)
         descripcion = (
             self.textoDescripcionTareaLabelFrameCargaDeTareas.get("1.0", END),
@@ -395,13 +396,31 @@ class acceso:
         datos = (
             titulo,
             descripcion,
-            asignadoA,
             vencimiento,
             self.idUsuarioLogueado,
             id_UsuarioAsignado,
+            asignadoA,                       
             1,
-            id_PrioridadAsignada,
+            id_PrioridadAsignada
         )
+
+        # self.conexion.insertarTareaNuevaDB(datos)
+
+        try:
+            mydb = sqlite3.connect("gestor_proyecto.db")
+
+            #   Genero un cursos de la conexion
+            mycursor = mydb.cursor()
+
+            sql = "insert into tareas(titulo,descripcion,fecha_vencimiento,id_creador,id_asignado,id_estado,id_prioridad) values(?,?,?,?,?,?,?)"
+
+            mycursor.execute(sql, datos)
+            #   Hago los cambios
+            mydb.commit()
+        finally:
+            #   Cierro la conexion
+            mydb.close()
+        ms.showinfo("Vamos", "Registro insertado")
         print(datos)
 
 
