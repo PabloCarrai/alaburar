@@ -270,25 +270,77 @@ class acceso:
             column=0, row=0, padx=10, pady=10
         )
 
-        self.datoEntradaTituloTareaLabelFrameCargaDeTareas=StringVar()
-        self.entradaTituloTareaLabelFrameCargaDeTareas=Entry(self.labelframeCargaDeTareas,textvariable=self.datoEntradaTituloTareaLabelFrameCargaDeTareas)
-        self.entradaTituloTareaLabelFrameCargaDeTareas.grid(column=1, row=0, padx=10, pady=10
+        self.datoEntradaTituloTareaLabelFrameCargaDeTareas = StringVar()
+        self.entradaTituloTareaLabelFrameCargaDeTareas = Entry(
+            self.labelframeCargaDeTareas,
+            textvariable=self.datoEntradaTituloTareaLabelFrameCargaDeTareas,
+        )
+        self.entradaTituloTareaLabelFrameCargaDeTareas.grid(
+            column=1, row=0, padx=10, pady=10
         )
 
-        self.etiquetaDescripcionTareaLabelFrameCargaDeTareas=Label(self.labelframeCargaDeTareas,text="Descripcion")
-        self.etiquetaDescripcionTareaLabelFrameCargaDeTareas.grid(column=0, row=2, padx=10, pady=10
+        self.etiquetaDescripcionTareaLabelFrameCargaDeTareas = Label(
+            self.labelframeCargaDeTareas, text="Descripcion"
+        )
+        self.etiquetaDescripcionTareaLabelFrameCargaDeTareas.grid(
+            column=0, row=2, padx=10, pady=10
         )
 
-        self.textoDescripcionTareaLabelFrameCargaDeTareas=Text(self.labelframeCargaDeTareas,height=5,width=20)
-        self.textoDescripcionTareaLabelFrameCargaDeTareas.grid(column=1, row=2, padx=10, pady=10
+        self.textoDescripcionTareaLabelFrameCargaDeTareas = Text(
+            self.labelframeCargaDeTareas, height=5, width=20
+        )
+        self.textoDescripcionTareaLabelFrameCargaDeTareas.grid(
+            column=1, row=2, padx=10, pady=10
         )
 
-        self.etiquetaCalendarioTareaLabelFrameCargaDeTareas=Label(self.labelframeCargaDeTareas,text="Vencimiento")
-        self.etiquetaCalendarioTareaLabelFrameCargaDeTareas.grid(column=0, row=3, padx=10, pady=10
+        self.etiquetaCalendarioTareaLabelFrameCargaDeTareas = Label(
+            self.labelframeCargaDeTareas, text="Vencimiento"
+        )
+        self.etiquetaCalendarioTareaLabelFrameCargaDeTareas.grid(
+            column=0, row=3, padx=10, pady=10
         )
 
-        self.calendarioTareaLabelFrameCargaDeTareas=DateEntry(self.labelframeCargaDeTareas)
-        self.calendarioTareaLabelFrameCargaDeTareas.grid(column=1, row=3, padx=10, pady=10
+        self.calendarioTareaLabelFrameCargaDeTareas = DateEntry(
+            self.labelframeCargaDeTareas
+        )
+        self.calendarioTareaLabelFrameCargaDeTareas.grid(
+            column=1, row=3, padx=10, pady=10
+        )
+
+        self.etiquetaAsignadoALabelFrameCargaDeTareas = Label(
+            self.labelframeCargaDeTareas, text="Asignado a"
+        )
+        self.etiquetaAsignadoALabelFrameCargaDeTareas.grid(
+            column=0, row=4, padx=10, pady=10
+        )
+
+        nombresCombobox = self.conexion.listarUsuarios()
+
+        self.comboboxAsignadoALabelFrameCargaDeTareas = ttk.Combobox(
+            self.labelframeCargaDeTareas,
+            state="readonly",
+            values=nombresCombobox,
+        )
+        self.comboboxAsignadoALabelFrameCargaDeTareas.grid(
+            column=1, row=4, padx=10, pady=10
+        )
+
+        self.etiquetaEstadoLabelFrameCargaDeTareas = Label(
+            self.labelframeCargaDeTareas, text="Estado"
+        )
+        self.etiquetaEstadoLabelFrameCargaDeTareas.grid(
+            column=0, row=5, padx=10, pady=10
+        )
+
+
+        estadosComboBox= self.conexion.listarEstados()
+        self.comboboxEstadoALabelFrameCargaDeTareas = ttk.Combobox(
+            self.labelframeCargaDeTareas,
+            state="readonly",
+            values=estadosComboBox,
+        )
+        self.comboboxEstadoALabelFrameCargaDeTareas.grid(
+            column=1, row=5, padx=10, pady=10
         )
 
         self.frame3 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)

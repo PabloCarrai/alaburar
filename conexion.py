@@ -68,3 +68,28 @@ class conexion:
         finally:
             #   Cierro la conexion
             conexion.close()
+
+    def listarUsuarios(self):
+        #   Uso try por si falla algo
+        try:
+            conexion = self.abrir()
+            mycursor = conexion.cursor()
+            sql = "select nombre from usuarios"
+            mycursor.execute(sql)
+            info = mycursor.fetchall()
+            return info
+        finally:
+            conexion.close()
+
+    def listarEstados(self):
+        #   Uso try por si falla algo
+        try:
+            conexion = self.abrir()
+            mycursor = conexion.cursor()
+            sql = "select nombre from estados_tarea"
+            mycursor.execute(sql)
+            info = mycursor.fetchall()
+            return info
+        finally:
+            conexion.close()
+
