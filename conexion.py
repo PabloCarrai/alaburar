@@ -81,12 +81,12 @@ class conexion:
         finally:
             conexion.close()
 
-    def listarEstados(self):
+    def listarPrioridades(self):
         #   Uso try por si falla algo
         try:
             conexion = self.abrir()
             mycursor = conexion.cursor()
-            sql = "select nombre from estados_tarea"
+            sql = "select nombre from prioridades_tarea"
             mycursor.execute(sql)
             info = mycursor.fetchall()
             return info

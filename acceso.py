@@ -314,33 +314,44 @@ class acceso:
             column=0, row=4, padx=10, pady=10
         )
 
+        self.datoComboBoxAsignadoA = StringVar()
+
         nombresCombobox = self.conexion.listarUsuarios()
 
         self.comboboxAsignadoALabelFrameCargaDeTareas = ttk.Combobox(
             self.labelframeCargaDeTareas,
             state="readonly",
             values=nombresCombobox,
+            textvariable=self.datoComboBoxAsignadoA,
         )
         self.comboboxAsignadoALabelFrameCargaDeTareas.grid(
             column=1, row=4, padx=10, pady=10
         )
 
-        self.etiquetaEstadoLabelFrameCargaDeTareas = Label(
-            self.labelframeCargaDeTareas, text="Estado"
+        self.etiquetaPrioridadLabelFrameCargaDeTareas = Label(
+            self.labelframeCargaDeTareas, text="Prioridad"
         )
-        self.etiquetaEstadoLabelFrameCargaDeTareas.grid(
+        self.etiquetaPrioridadLabelFrameCargaDeTareas.grid(
             column=0, row=5, padx=10, pady=10
         )
 
-
-        estadosComboBox= self.conexion.listarEstados()
-        self.comboboxEstadoALabelFrameCargaDeTareas = ttk.Combobox(
+        self.datoComboBoxPrioridadLabelFrameCargaDeTarea = StringVar()
+        prioridadComboBox = self.conexion.listarPrioridades()
+        self.comboboxPrioridadALabelFrameCargaDeTareas = ttk.Combobox(
             self.labelframeCargaDeTareas,
             state="readonly",
-            values=estadosComboBox,
+            values=prioridadComboBox,
+            textvariable=self.datoComboBoxPrioridadLabelFrameCargaDeTarea,
         )
-        self.comboboxEstadoALabelFrameCargaDeTareas.grid(
+        self.comboboxPrioridadALabelFrameCargaDeTareas.grid(
             column=1, row=5, padx=10, pady=10
+        )
+
+        self.botonCrearTareaLabelFrameCargaDeTareas = Button(
+            self.labelframeCargaDeTareas, text="Crear Tarea", command=self.crearTarea
+        )
+        self.botonCrearTareaLabelFrameCargaDeTareas.grid(
+            column=1, row=6, padx=10, pady=10
         )
 
         self.frame3 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
@@ -359,6 +370,22 @@ class acceso:
         self.notebookPantallaPrincipalUsuarioLogueado.add(self.frame4, text="tab4")
         self.notebookPantallaPrincipalUsuarioLogueado.add(self.frame5, text="tab5")
         self.notebookPantallaPrincipalUsuarioLogueado.add(self.frame6, text="tab6")
+
+    def crearTarea(self):
+        datos = (
+            self.datoEntradaTituloTareaLabelFrameCargaDeTareas.get(),
+            self.textoDescripcionTareaLabelFrameCargaDeTareas.get("1.0",END),
+            self.datoComboBoxAsignadoA.get(),
+            self.calendarioTareaLabelFrameCargaDeTareas.get_date(),
+            self.idUsuarioLogueado,
+            self.datoComboBoxAsignadoA.get(),
+            1,
+            self.datoComboBoxPrioridadLabelFrameCargaDeTarea.get(),
+        )
+
+        print(datos)
+
+        pass
 
 
 aplicacion = acceso()
