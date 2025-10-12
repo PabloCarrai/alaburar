@@ -93,3 +93,26 @@ class conexion:
         finally:
             conexion.close()
 
+    def obteneridnombreUsuario(self, dato):
+        #   Uso try por si falla algo
+        try:
+            conexion = self.abrir()
+            mycursor = conexion.cursor()
+            sql = "select id from usuarios where nombre=?"
+            mycursor.execute(sql, dato)
+            info = mycursor.fetchall()
+            return info
+        finally:
+            conexion.close()
+
+    def obteneridprioridad(self, dato):
+        #   Uso try por si falla algo
+        try:
+            conexion = self.abrir()
+            mycursor = conexion.cursor()
+            #   sql = "select id from prioridades_tarea where nombre=?"
+            mycursor.execute("select id from prioridades_tarea where nombre=?", dato)
+            info = mycursor.fetchall()
+            return info
+        finally:
+            conexion.close()

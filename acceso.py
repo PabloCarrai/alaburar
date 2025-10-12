@@ -372,20 +372,37 @@ class acceso:
         self.notebookPantallaPrincipalUsuarioLogueado.add(self.frame6, text="tab6")
 
     def crearTarea(self):
-        datos = (
-            self.datoEntradaTituloTareaLabelFrameCargaDeTareas.get(),
-            self.textoDescripcionTareaLabelFrameCargaDeTareas.get("1.0",END),
-            self.datoComboBoxAsignadoA.get(),
-            self.calendarioTareaLabelFrameCargaDeTareas.get_date(),
-            self.idUsuarioLogueado,
-            self.datoComboBoxAsignadoA.get(),
-            1,
-            self.datoComboBoxPrioridadLabelFrameCargaDeTarea.get(),
+        #   Busco el id del usuario en la tabla usuario
+        respuestaIDDeUsuario = self.conexion.obteneridnombreUsuario(
+            (self.datoComboBoxAsignadoA.get(),)
         )
+        #   Necesito sacar solo el valor
+        id_UsuarioAsignado = respuestaIDDeUsuario[0][0]
 
+        datocomboPrioridad = self.datoComboBoxPrioridadLabelFrameCargaDeTarea.get
+
+        respuestaIDPrioridad = self.conexion.obteneridprioridad((datocomboPrioridad,))
+        print(respuestaIDDeUsuario)
+        # id_PrioridadAsignada = respuestaIDPrioridad[0][0]
+
+        titulo = (self.datoEntradaTituloTareaLabelFrameCargaDeTareas.get(),)
+        descripcion = (
+            self.textoDescripcionTareaLabelFrameCargaDeTareas.get("1.0", END),
+        )
+        asignadoA = (self.datoComboBoxAsignadoA.get(),)
+        vencimiento = (self.calendarioTareaLabelFrameCargaDeTareas.get_date(),)
+
+        datos = (
+            titulo,
+            descripcion,
+            asignadoA,
+            vencimiento,
+            self.idUsuarioLogueado,
+            id_UsuarioAsignado,
+            1,
+            id_PrioridadAsignada,
+        )
         print(datos)
-
-        pass
 
 
 aplicacion = acceso()
