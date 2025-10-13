@@ -81,6 +81,17 @@ class conexion:
         finally:
             conexion.close()
 
+    def correoExiste(self,dato):
+        #   Uso try por si falla algo
+        try:
+            conexion = self.abrir()
+            mycursor = conexion.cursor()
+            mycursor.execute("select count(*) from usuarios where email=?",(dato,))
+            info = mycursor.fetchall()
+            return info
+        finally:
+            conexion.close()
+
     def listarPrioridades(self):
         #   Uso try por si falla algo
         try:

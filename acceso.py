@@ -172,22 +172,31 @@ class acceso:
         clave1 = self.datoEntradaClave1PantallaRegistroUsuario.get()
         #   Genero una tupla para el insert a la tabla usuario
         datos = (nombre, correo, clave)
+
         #   Chequeo que no haya alguna entrada vacia
         if len(nombre) == 0 or len(correo) == 0 or len(clave) == 0 or len(clave1) == 0:
             print("Esta vacio")
             ms.showwarning("Error", "Hay campos vacios o mal cargados")
         else:
-            #   Chequeo que ambas claves coincidan
-            if clave != clave1:
-                ms.showwarning("Error", "Ingresastes dos claves diferentes")
-            else:
-                #   Si valida las condiciones anteriores inserto el registro y vacio los entry
-                self.conexion.registrarUsuario(datos)
-                self.entradaNombrePantallaRegistroUsuario.delete(0, END)
+            #   Tengo que chequer antes que nada que el correo no exista.
+            correoexiste = self.conexion.correoExiste(correo)
+            #   Si correoexiste devuelve 1 es porque el correo existe. Y muestra un error
+            if correoexiste[0][0] == 1:
+                #Si el correo existe en la db muestro el error y limpio el campo para que ingrese uno nuevo
+                ms.showwarning("Error", "El correo existe.")
                 self.entradaCorreoPantallaRegistroUsuario.delete(0, END)
-                self.entradaClavePantallaRegistroUsuario.delete(0, END)
-                self.entradaClave1PantallaRegistroUsuario.delete(0, END)
-                ms.showinfo("Vamos", "Nuevo Usuario")
+            else:
+                #   Chequeo que ambas claves coincidan
+                if clave != clave1:
+                    ms.showwarning("Error", "Ingresastes dos claves diferentes")
+                else:
+                    #   Si valida las condiciones anteriores inserto el registro y vacio los entry
+                    self.conexion.registrarUsuario(datos)
+                    self.entradaNombrePantallaRegistroUsuario.delete(0, END)
+                    self.entradaCorreoPantallaRegistroUsuario.delete(0, END)
+                    self.entradaClavePantallaRegistroUsuario.delete(0, END)
+                    self.entradaClave1PantallaRegistroUsuario.delete(0, END)
+                    ms.showinfo("Vamos", "Nuevo Usuario")
 
     def pantallaUsuarioLogueado(self):
         #   Por ahora solo los muestro para onda ver si hay o no usuario
@@ -397,10 +406,12 @@ class acceso:
             1,
             idPrioridadTareaValor,
         )
-        print(datos)
         self.conexion.ingresarTareaNueva(datos)
-        
         ms.showinfo("vamos", "Registro de tarea nueva creada")
+        self.entradaTituloTareaLabelFrameCargaDeTareas.delete(0, END)
+        self.textoDescripcionTareaLabelFrameCargaDeTareas.delete("1.0", END)
+        self.comboboxAsignadoALabelFrameCargaDeTareas.set("")
+        self.comboboxPrioridadALabelFrameCargaDeTareas.set("")
 
 
 aplicacion = acceso()
