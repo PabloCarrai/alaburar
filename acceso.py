@@ -148,6 +148,9 @@ class acceso:
         resultados = self.conexion.consultarUsuario(datos)
         #   Si devuelve 1 es porque existe alguien con esas credenciales
         if len(resultados) != 0:
+            #   Limpio los entry de correo y clave.
+            self.entradaCorreoPantallaLogin.delete(0, END)
+            self.entradaClavePantallaLogin.delete(0, END)
             #   Aca tendria que llamar al metodo de la ventana principal de la aplicacion
             #   Guardo datos de sesion
             for i in resultados:
@@ -163,6 +166,9 @@ class acceso:
             ms.showerror(
                 "Problemas", "No tengo a ningun usuario registrado con esos datos"
             )
+            #   Limpio los entry de correo y clave.
+            self.entradaCorreoPantallaLogin.delete(0, END)
+            self.entradaClavePantallaLogin.delete(0, END)
 
     def registrarUsuario(self):
         #   Guardo el contenido de las entradas en variables
@@ -182,7 +188,7 @@ class acceso:
             correoexiste = self.conexion.correoExiste(correo)
             #   Si correoexiste devuelve 1 es porque el correo existe. Y muestra un error
             if correoexiste[0][0] == 1:
-                #Si el correo existe en la db muestro el error y limpio el campo para que ingrese uno nuevo
+                # Si el correo existe en la db muestro el error y limpio el campo para que ingrese uno nuevo
                 ms.showwarning("Error", "El correo existe.")
                 self.entradaCorreoPantallaRegistroUsuario.delete(0, END)
             else:
@@ -279,7 +285,7 @@ class acceso:
         self.etiquetaTituloTareaLabelFrameCargaDeTareas.grid(
             column=0, row=0, padx=10, pady=10
         )
-
+        #   El stringvar del titulo de la tarea
         self.datoEntradaTituloTareaLabelFrameCargaDeTareas = StringVar()
         self.entradaTituloTareaLabelFrameCargaDeTareas = Entry(
             self.labelframeCargaDeTareas,
@@ -288,46 +294,46 @@ class acceso:
         self.entradaTituloTareaLabelFrameCargaDeTareas.grid(
             column=1, row=0, padx=10, pady=10
         )
-
+        #   Etiqueta Descripcion de la tarea
         self.etiquetaDescripcionTareaLabelFrameCargaDeTareas = Label(
             self.labelframeCargaDeTareas, text="Descripcion"
         )
         self.etiquetaDescripcionTareaLabelFrameCargaDeTareas.grid(
             column=0, row=2, padx=10, pady=10
         )
-
+        #   Texto de la descripcion de la tarea
         self.textoDescripcionTareaLabelFrameCargaDeTareas = Text(
             self.labelframeCargaDeTareas, height=5, width=20
         )
         self.textoDescripcionTareaLabelFrameCargaDeTareas.grid(
             column=1, row=2, padx=10, pady=10
         )
-
+        #   Etiqueta del combobox Vencimiento(Fecha de vencimiento de la tarea)
         self.etiquetaCalendarioTareaLabelFrameCargaDeTareas = Label(
             self.labelframeCargaDeTareas, text="Vencimiento"
         )
         self.etiquetaCalendarioTareaLabelFrameCargaDeTareas.grid(
             column=0, row=3, padx=10, pady=10
         )
-
+        #   Calendario para cargar la fecha del vencimiento de la tarea
         self.calendarioTareaLabelFrameCargaDeTareas = DateEntry(
             self.labelframeCargaDeTareas
         )
         self.calendarioTareaLabelFrameCargaDeTareas.grid(
             column=1, row=3, padx=10, pady=10
         )
-
+        #   Etiqueta Asignado a
         self.etiquetaAsignadoALabelFrameCargaDeTareas = Label(
             self.labelframeCargaDeTareas, text="Asignado a"
         )
         self.etiquetaAsignadoALabelFrameCargaDeTareas.grid(
             column=0, row=4, padx=10, pady=10
         )
-
+        #   Stringvar del combobox Vencimiento
         self.datoComboBoxAsignadoA = StringVar()
-
+        #   Aca guardo la lista de los usuarios existentes para mostrarlo en el combobox asignado a
         nombresCombobox = self.conexion.listarUsuarios()
-
+        #   El combobox que se arma con el listado de las personas a quienes se le puede asignar tarea
         self.comboboxAsignadoALabelFrameCargaDeTareas = ttk.Combobox(
             self.labelframeCargaDeTareas,
             state="readonly",
@@ -337,16 +343,18 @@ class acceso:
         self.comboboxAsignadoALabelFrameCargaDeTareas.grid(
             column=1, row=4, padx=10, pady=10
         )
-
+        #   Etiqueta de la prioridad de la tarea
         self.etiquetaPrioridadLabelFrameCargaDeTareas = Label(
             self.labelframeCargaDeTareas, text="Prioridad"
         )
         self.etiquetaPrioridadLabelFrameCargaDeTareas.grid(
             column=0, row=5, padx=10, pady=10
         )
-
+        #   Stringvar para el combobox de Prioridades
         self.datoComboBoxPrioridadLabelFrameCargaDeTarea = StringVar()
+        #   Aca tomo los nombres de las prioridades para mostrar en el combobox
         prioridadComboBox = self.conexion.listarPrioridades()
+        #   Armo el combobox de prioridades
         self.comboboxPrioridadALabelFrameCargaDeTareas = ttk.Combobox(
             self.labelframeCargaDeTareas,
             state="readonly",
@@ -356,7 +364,7 @@ class acceso:
         self.comboboxPrioridadALabelFrameCargaDeTareas.grid(
             column=1, row=5, padx=10, pady=10
         )
-
+        #   Boton Crear tarea
         self.botonCrearTareaLabelFrameCargaDeTareas = Button(
             self.labelframeCargaDeTareas, text="Crear Tarea", command=self.crearTarea
         )
@@ -364,7 +372,92 @@ class acceso:
             column=1, row=6, padx=10, pady=10
         )
 
+        #   Frame del listado de tareas
         self.frame3 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
+
+        self.labelframeListadoDeTareas = LabelFrame(
+            self.frame3, text="Datos de Session"
+        )
+        self.labelframeListadoDeTareas.grid(column=0, row=0, padx=10, pady=10)
+
+        self.etiquetaNombreDeTareaLabelFrameListadoDeTareas = Label(
+            self.labelframeListadoDeTareas, text="Nombre"
+        )
+        self.etiquetaNombreDeTareaLabelFrameListadoDeTareas.grid(
+            column=0, row=0, padx=10, pady=10
+        )
+
+
+        ### Revisar lo de abajo es la nueva ventana listado de tareas
+
+
+        #   Etiqueta Asignado a
+        self.etiquetaAsignadoALabelFrameListadoDeTareas= Label(
+            self.labelframeListadoDeTareas, text="Asignado a"
+        )
+        self.etiquetaAsignadoALabelFrameListadoDeTareas.grid(
+            column=0, row=0, padx=10, pady=10
+        )
+        #   Stringvar del combobox Vencimiento
+        self.datoComboBoxAsignadoALabelFrameListadoDeTareas = StringVar()
+        #   Aca guardo la lista de los usuarios existentes para mostrarlo en el combobox asignado a
+        nombresComboboxLabelFrameListadoDeTareas = self.conexion.listarUsuarios()
+        #   El combobox que se arma con el listado de las personas a quienes se le puede asignar tarea
+        self.comboboxAsignadoALabelFrameCargaDeTareas = ttk.Combobox(
+            self.labelframeListadoDeTareas,
+            state="readonly",
+            values=nombresComboboxLabelFrameListadoDeTareas,
+            textvariable=self.datoComboBoxAsignadoALabelFrameListadoDeTareas,
+        )
+        self.comboboxAsignadoALabelFrameCargaDeTareas.grid(
+            column=0, row=1, padx=10, pady=10
+        )
+        #   Etiqueta de la prioridad de la tarea
+        self.etiquetaPrioridadLabelFrameCargaDeTareas = Label(
+            self.labelframeListadoDeTareas, text="Prioridad"
+        )
+        self.etiquetaPrioridadLabelFrameCargaDeTareas.grid(
+            column=0, row=5, padx=10, pady=10
+        )
+        #   Stringvar para el combobox de Prioridades
+        self.datoComboBoxPrioridadLabelFrameCargaDeTarea = StringVar()
+        #   Aca tomo los nombres de las prioridades para mostrar en el combobox
+        prioridadComboBox = self.conexion.listarPrioridades()
+        #   Armo el combobox de prioridades
+        self.comboboxPrioridadALabelFrameCargaDeTareas = ttk.Combobox(
+            self.labelframeListadoDeTareas,
+            state="readonly",
+            values=prioridadComboBox,
+            textvariable=self.datoComboBoxPrioridadLabelFrameCargaDeTarea,
+        )
+        self.comboboxPrioridadALabelFrameCargaDeTareas.grid(
+            column=1, row=5, padx=10, pady=10
+        )
+
+
+
+
+        ##  Hasta aca
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         self.frame4 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
         self.frame5 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
         self.frame6 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
@@ -376,7 +469,9 @@ class acceso:
         self.notebookPantallaPrincipalUsuarioLogueado.add(
             self.frame2, text="Carga De Tareas"
         )
-        self.notebookPantallaPrincipalUsuarioLogueado.add(self.frame3, text="tab3")
+        self.notebookPantallaPrincipalUsuarioLogueado.add(
+            self.frame3, text="Listado de Tareas"
+        )
         self.notebookPantallaPrincipalUsuarioLogueado.add(self.frame4, text="tab4")
         self.notebookPantallaPrincipalUsuarioLogueado.add(self.frame5, text="tab5")
         self.notebookPantallaPrincipalUsuarioLogueado.add(self.frame6, text="tab6")
