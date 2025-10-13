@@ -93,26 +93,41 @@ class conexion:
         finally:
             conexion.close()
 
-    def obteneridnombreUsuario(self, dato):
+    def obtenerIdporNombreAsignadoa(self, datos):
         #   Uso try por si falla algo
         try:
             conexion = self.abrir()
             mycursor = conexion.cursor()
-            sql = "select id from usuarios where nombre=?"
-            mycursor.execute(sql, dato)
+            mycursor.execute("select id from usuarios where nombre=?", (datos,))
             info = mycursor.fetchall()
             return info
         finally:
             conexion.close()
 
-    def obteneridprioridad(self, dato):
+    def obtenerIdPorNombrePrioridad(self,datos):
         #   Uso try por si falla algo
         try:
             conexion = self.abrir()
             mycursor = conexion.cursor()
-            #   sql = "select id from prioridades_tarea where nombre=?"
-            mycursor.execute("select id from prioridades_tarea where nombre=?", dato)
+            mycursor.execute("select id from prioridades_tarea where nombre=?", (datos,))
             info = mycursor.fetchall()
             return info
         finally:
+            conexion.close()
+
+    def ingresarTareaNueva(self,datos):    
+            #   Uso try por si falla algo
+        try:
+            #   Llamo a la apertura de la conexion
+            conexion = self.abrir()
+            #   Genero un cursos de la conexion
+            mycursor = conexion.cursor()
+
+            sql = "insert into tareas(titulo,descripcion,fecha_vencimiento,id_creador,id_asignado,id_estado,id_prioridad) values(?,?,?,?,?,?,?)"
+            #   Ahora si, corro la sentencia sql y uso los datos sobre la consulta
+            mycursor.execute(sql, datos)
+            #   Hago los cambios
+            conexion.commit()
+        finally:
+            #   Cierro la conexion
             conexion.close()

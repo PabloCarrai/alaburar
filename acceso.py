@@ -373,55 +373,34 @@ class acceso:
         self.notebookPantallaPrincipalUsuarioLogueado.add(self.frame6, text="tab6")
 
     def crearTarea(self):
-        #   Busco el id del usuario en la tabla usuario
-        respuestaIDDeUsuario = self.conexion.obteneridnombreUsuario(
-            (self.datoComboBoxAsignadoA.get(),)
+
+        idAsinadoA = self.conexion.obtenerIdporNombreAsignadoa(
+            self.datoComboBoxAsignadoA.get()
         )
-        #   Necesito sacar solo el valor
-        id_UsuarioAsignado = respuestaIDDeUsuario[0][0]
-
-        datocomboPrioridad = self.datoComboBoxPrioridadLabelFrameCargaDeTarea.get()
-        respuestaIDPrioridad = self.conexion.obteneridprioridad((datocomboPrioridad,))
-        print(respuestaIDDeUsuario)
-        id_PrioridadAsignada = respuestaIDPrioridad[0][0]
-
-        ###
-        titulo = (self.datoEntradaTituloTareaLabelFrameCargaDeTareas.get(),)
-        descripcion = (
-            self.textoDescripcionTareaLabelFrameCargaDeTareas.get("1.0", END),
+        #   Esto es el id del usuario AsignadoA
+        idAsinadoAValor = idAsinadoA[0][0]
+        #   Esto es el id de la prioridad de la tarea
+        idPrioridadTarea = self.conexion.obtenerIdPorNombrePrioridad(
+            self.datoComboBoxPrioridadLabelFrameCargaDeTarea.get()
         )
-        asignadoA = (self.datoComboBoxAsignadoA.get(),)
-        vencimiento = (self.calendarioTareaLabelFrameCargaDeTareas.get_date(),)
-
+        idPrioridadTareaValor = idPrioridadTarea[0][0]
+        """
+        Aca por el momento tengo, 
+        titulo, descripcion,vencimiento,idcreadir,asignadoA,estadotarea,Prioridad
+        """
         datos = (
-            titulo,
-            descripcion,
-            vencimiento,
+            self.datoEntradaTituloTareaLabelFrameCargaDeTareas.get(),
+            self.textoDescripcionTareaLabelFrameCargaDeTareas.get("1.0", END),
+            self.calendarioTareaLabelFrameCargaDeTareas.get_date(),
             self.idUsuarioLogueado,
-            id_UsuarioAsignado,
-            asignadoA,                       
+            idAsinadoAValor,
             1,
-            id_PrioridadAsignada
+            idPrioridadTareaValor,
         )
-
-        # self.conexion.insertarTareaNuevaDB(datos)
-
-        try:
-            mydb = sqlite3.connect("gestor_proyecto.db")
-
-            #   Genero un cursos de la conexion
-            mycursor = mydb.cursor()
-
-            sql = "insert into tareas(titulo,descripcion,fecha_vencimiento,id_creador,id_asignado,id_estado,id_prioridad) values(?,?,?,?,?,?,?)"
-
-            mycursor.execute(sql, datos)
-            #   Hago los cambios
-            mydb.commit()
-        finally:
-            #   Cierro la conexion
-            mydb.close()
-        ms.showinfo("Vamos", "Registro insertado")
         print(datos)
+        self.conexion.ingresarTareaNueva(datos)
+        
+        ms.showinfo("vamos", "Registro de tarea nueva creada")
 
 
 aplicacion = acceso()
