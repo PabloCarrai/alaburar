@@ -81,12 +81,12 @@ class conexion:
         finally:
             conexion.close()
 
-    def correoExiste(self,dato):
+    def correoExiste(self, dato):
         #   Uso try por si falla algo
         try:
             conexion = self.abrir()
             mycursor = conexion.cursor()
-            mycursor.execute("select count(*) from usuarios where email=?",(dato,))
+            mycursor.execute("select count(*) from usuarios where email=?", (dato,))
             info = mycursor.fetchall()
             return info
         finally:
@@ -115,19 +115,21 @@ class conexion:
         finally:
             conexion.close()
 
-    def obtenerIdPorNombrePrioridad(self,datos):
+    def obtenerIdPorNombrePrioridad(self, datos):
         #   Uso try por si falla algo
         try:
             conexion = self.abrir()
             mycursor = conexion.cursor()
-            mycursor.execute("select id from prioridades_tarea where nombre=?", (datos,))
+            mycursor.execute(
+                "select id from prioridades_tarea where nombre=?", (datos,)
+            )
             info = mycursor.fetchall()
             return info
         finally:
             conexion.close()
 
-    def ingresarTareaNueva(self,datos):    
-            #   Uso try por si falla algo
+    def ingresarTareaNueva(self, datos):
+        #   Uso try por si falla algo
         try:
             #   Llamo a la apertura de la conexion
             conexion = self.abrir()
@@ -141,4 +143,16 @@ class conexion:
             conexion.commit()
         finally:
             #   Cierro la conexion
+            conexion.close()
+
+    def listarEstados(self):
+        #   Uso try por si falla algo
+        try:
+            conexion = self.abrir()
+            mycursor = conexion.cursor()
+            sql = "select nombre from estados_tarea"
+            mycursor.execute(sql)
+            info = mycursor.fetchall()
+            return info
+        finally:
             conexion.close()

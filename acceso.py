@@ -380,12 +380,56 @@ class acceso:
         )
         self.labelframeListadoDeTareas.grid(column=0, row=0, padx=10, pady=10)
 
-        self.etiquetaNombreDeTareaLabelFrameListadoDeTareas = Label(
-            self.labelframeListadoDeTareas, text="Nombre"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        self.etiquetaEstadosDeTareaLabelFrameListadoDeTareas = Label(
+            self.labelframeListadoDeTareas, text="Estados:"
         )
-        self.etiquetaNombreDeTareaLabelFrameListadoDeTareas.grid(
+        self.etiquetaEstadosDeTareaLabelFrameListadoDeTareas.grid(
             column=0, row=0, padx=10, pady=10
         )
+
+        #   Stringvar para el combobox de Estados
+        self.datoComboBoxEstadosLabelFrameCargaDeTarea = StringVar()
+        #   Aca tomo los nombres de las Estados para mostrar en el combobox
+        estadosComboBox = self.conexion.listarEstados()
+        #   Armo el combobox de prioridades
+        self.comboboxPrioridadALabelFrameCargaDeTareas = ttk.Combobox(
+            self.labelframeListadoDeTareas,
+            state="readonly",
+            values=estadosComboBox,
+            textvariable=self.datoComboBoxPrioridadLabelFrameCargaDeTarea,
+        )
+        self.comboboxPrioridadALabelFrameCargaDeTareas.grid(
+            column=1, row=0, padx=10, pady=10
+        )
+
+        
+
+
+
+
+
+
+
 
         self.frame4 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
         self.frame5 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
