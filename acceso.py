@@ -376,7 +376,7 @@ class acceso:
         self.frame3 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
 
         self.labelframeListadoDeTareas = LabelFrame(
-            self.frame3, text="Datos de Session"
+            self.frame3, text="Listado de Tareas"
         )
         self.labelframeListadoDeTareas.grid(column=0, row=0, padx=10, pady=10)
 
@@ -386,77 +386,6 @@ class acceso:
         self.etiquetaNombreDeTareaLabelFrameListadoDeTareas.grid(
             column=0, row=0, padx=10, pady=10
         )
-
-
-        ### Revisar lo de abajo es la nueva ventana listado de tareas
-
-
-        #   Etiqueta Asignado a
-        self.etiquetaAsignadoALabelFrameListadoDeTareas= Label(
-            self.labelframeListadoDeTareas, text="Asignado a"
-        )
-        self.etiquetaAsignadoALabelFrameListadoDeTareas.grid(
-            column=0, row=0, padx=10, pady=10
-        )
-        #   Stringvar del combobox Vencimiento
-        self.datoComboBoxAsignadoALabelFrameListadoDeTareas = StringVar()
-        #   Aca guardo la lista de los usuarios existentes para mostrarlo en el combobox asignado a
-        nombresComboboxLabelFrameListadoDeTareas = self.conexion.listarUsuarios()
-        #   El combobox que se arma con el listado de las personas a quienes se le puede asignar tarea
-        self.comboboxAsignadoALabelFrameCargaDeTareas = ttk.Combobox(
-            self.labelframeListadoDeTareas,
-            state="readonly",
-            values=nombresComboboxLabelFrameListadoDeTareas,
-            textvariable=self.datoComboBoxAsignadoALabelFrameListadoDeTareas,
-        )
-        self.comboboxAsignadoALabelFrameCargaDeTareas.grid(
-            column=0, row=1, padx=10, pady=10
-        )
-        #   Etiqueta de la prioridad de la tarea
-        self.etiquetaPrioridadLabelFrameCargaDeTareas = Label(
-            self.labelframeListadoDeTareas, text="Prioridad"
-        )
-        self.etiquetaPrioridadLabelFrameCargaDeTareas.grid(
-            column=0, row=5, padx=10, pady=10
-        )
-        #   Stringvar para el combobox de Prioridades
-        self.datoComboBoxPrioridadLabelFrameCargaDeTarea = StringVar()
-        #   Aca tomo los nombres de las prioridades para mostrar en el combobox
-        prioridadComboBox = self.conexion.listarPrioridades()
-        #   Armo el combobox de prioridades
-        self.comboboxPrioridadALabelFrameCargaDeTareas = ttk.Combobox(
-            self.labelframeListadoDeTareas,
-            state="readonly",
-            values=prioridadComboBox,
-            textvariable=self.datoComboBoxPrioridadLabelFrameCargaDeTarea,
-        )
-        self.comboboxPrioridadALabelFrameCargaDeTareas.grid(
-            column=1, row=5, padx=10, pady=10
-        )
-
-
-
-
-        ##  Hasta aca
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         self.frame4 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
         self.frame5 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
