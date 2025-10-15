@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 import conexion
 from tkinter import messagebox as ms
+from tkinter import scrolledtext as sc
 from tkcalendar import DateEntry
 import sqlite3
 
@@ -374,62 +375,110 @@ class acceso:
 
         #   Frame del listado de tareas
         self.frame3 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
-
+        #   Este es el label frame del listado de tareas
         self.labelframeListadoDeTareas = LabelFrame(
             self.frame3, text="Listado de Tareas"
         )
         self.labelframeListadoDeTareas.grid(column=0, row=0, padx=10, pady=10)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        #   Aca vamos con la etiqueta Estado del label frame listado de tareas
         self.etiquetaEstadosDeTareaLabelFrameListadoDeTareas = Label(
-            self.labelframeListadoDeTareas, text="Estados:"
+            self.labelframeListadoDeTareas, text="Estado:"
         )
         self.etiquetaEstadosDeTareaLabelFrameListadoDeTareas.grid(
             column=0, row=0, padx=10, pady=10
         )
 
         #   Stringvar para el combobox de Estados
-        self.datoComboBoxEstadosLabelFrameCargaDeTarea = StringVar()
+        self.datoComboBoxEstadosLabelFrameListadoDeTareas = StringVar()
         #   Aca tomo los nombres de las Estados para mostrar en el combobox
         estadosComboBox = self.conexion.listarEstados()
         #   Armo el combobox de prioridades
-        self.comboboxPrioridadALabelFrameCargaDeTareas = ttk.Combobox(
+        self.comboboxPrioridadALabelFrameListadoDeTareas = ttk.Combobox(
             self.labelframeListadoDeTareas,
             state="readonly",
             values=estadosComboBox,
-            textvariable=self.datoComboBoxPrioridadLabelFrameCargaDeTarea,
+            textvariable=self.datoComboBoxEstadosLabelFrameListadoDeTareas,
         )
-        self.comboboxPrioridadALabelFrameCargaDeTareas.grid(
+        self.comboboxPrioridadALabelFrameListadoDeTareas.grid(
             column=1, row=0, padx=10, pady=10
         )
+        #   Etiqueta Prioridad LabelFrame Listado de tareas
+        self.etiquetaPrioridadDeTareaLabelFrameListadoDeTareas = Label(
+            self.labelframeListadoDeTareas, text="Prioridad:"
+        )
+        self.etiquetaPrioridadDeTareaLabelFrameListadoDeTareas.grid(
+            column=0, row=1, padx=10, pady=10
+        )
 
-        
+        #   Stringvar para el combobox de Prioridad
+        self.datoComboBoxPrioridadLabelFrameListadoDeTareas = StringVar()
+        #   Aca tomo los nombres de las Prioridad para mostrar en el combobox
+        prioridadComboBox = (
+            self.conexion.listarPrioridad()
+        )  #   Tengo que generar el metodo y cambiarlo aca
+        #   Armo el combobox de prioridades
+        self.comboboxPrioridadALabelFrameListadoDeTareas = ttk.Combobox(
+            self.labelframeListadoDeTareas,
+            state="readonly",
+            values=prioridadComboBox,
+            textvariable=self.datoComboBoxPrioridadLabelFrameListadoDeTareas,
+        )
+        self.comboboxPrioridadALabelFrameListadoDeTareas.grid(
+            column=1, row=1, padx=10, pady=10
+        )
+        #   Etiqueta Asignado a listado de tareas
+        self.etiquetaAsignadoADeTareaLabelFrameListadoDeTareas = Label(
+            self.labelframeListadoDeTareas, text="Asignado a:"
+        )
+        self.etiquetaAsignadoADeTareaLabelFrameListadoDeTareas.grid(
+            column=0, row=2, padx=10, pady=10
+        )
 
+        #   Stringvar para el combobox de AsignadoA
+        self.datoComboBoxAsignadoALabelFrameListadoDeTareas = StringVar()
+        #   Aca tomo los nombres de las AsignadoA para mostrar en el combobox
+        asignadoAComboBox = (
+            self.conexion.listarUsuarios()
+        )  #   Tengo que generar el metodo y cambiarlo aca
+        #   Armo el combobox de prioridades
+        self.comboboxPrioridadALabelFrameListadoDeTareas = ttk.Combobox(
+            self.labelframeListadoDeTareas,
+            state="readonly",
+            values=asignadoAComboBox,
+            textvariable=self.datoComboBoxAsignadoALabelFrameListadoDeTareas,
+        )
+        self.comboboxPrioridadALabelFrameListadoDeTareas.grid(
+            column=1, row=2, padx=10, pady=10
+        )
+        #   Boton de Consulta de tareas
+        self.botonConsultarLabelFrameListadoDeTarea = Button(
+            self.labelframeListadoDeTareas,
+            text="Consultar",
+            command=self.consultarTareaDb,
+        )
+        self.botonConsultarLabelFrameListadoDeTarea.grid(
+            column=1, row=3, padx=10, pady=10
+        )
 
+        #   Aca va lo del labelframeResultado
+        self.labelframeListadoDeTareasResultado = LabelFrame(
+            self.frame3, text="Resultado"
+        )
+        self.labelframeListadoDeTareasResultado.grid(column=0, row=1, padx=10, pady=10)
 
+        self.etiquetaLabelFrameListadoDeTareasResultado = Label(
+            self.labelframeListadoDeTareasResultado, text="Tareas"
+        )
+        self.etiquetaLabelFrameListadoDeTareasResultado.grid(
+            column=0, row=0, padx=10, pady=10
+        )
 
-
-
-
+        self.scrooledtextLabelFrameListadoDeTareasResultado = sc.ScrolledText(
+            self.labelframeListadoDeTareasResultado, width=40, height=10
+        )
+        self.scrooledtextLabelFrameListadoDeTareasResultado.grid(
+            column=1, row=0, padx=10, pady=10
+        )
 
         self.frame4 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
         self.frame5 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
@@ -480,6 +529,13 @@ class acceso:
         self.textoDescripcionTareaLabelFrameCargaDeTareas.delete("1.0", END)
         self.comboboxAsignadoALabelFrameCargaDeTareas.set("")
         self.comboboxPrioridadALabelFrameCargaDeTareas.set("")
+
+    def consultarTareaDb(self):
+        print(
+            self.datoComboBoxEstadosLabelFrameListadoDeTareas.get(),
+            self.conexion.obtenerIdPorNombrePrioridad(self.datoComboBoxPrioridadLabelFrameListadoDeTareas.get())[0][0],
+            self.conexion.obtenerIdporNombreAsignadoa(self.datoComboBoxAsignadoALabelFrameListadoDeTareas.get())[0][0],
+        )
 
 
 aplicacion = acceso()

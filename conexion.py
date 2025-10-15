@@ -156,3 +156,15 @@ class conexion:
             return info
         finally:
             conexion.close()
+
+    def listarPrioridad(self):
+        #   Uso try por si falla algo
+        try:
+            conexion = self.abrir()
+            mycursor = conexion.cursor()
+            sql = "select nombre from prioridades_tarea"
+            mycursor.execute(sql)
+            info = mycursor.fetchall()
+            return info
+        finally:
+            conexion.close()
