@@ -480,7 +480,33 @@ class acceso:
             column=1, row=0, padx=10, pady=10
         )
 
+        #   frame4 es para Edicion de Tareas
         self.frame4 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
+        #   Labelframe de Edicion de tareas
+        self.labelFrameEdicionDeTareas = LabelFrame(
+            self.frame4, text="Edicion de Tareas"
+        )
+
+        self.labelFrameEdicionDeTareas.grid(column=0, row=0, padx=10, pady=10)
+
+        #   Etiqueta codigo para edicion de tareas
+        self.etiquetaCodigoTareaLabelFrameEdicionDeTareas = Label(
+            self.labelFrameEdicionDeTareas, text="Codigo"
+        )
+        self.etiquetaCodigoTareaLabelFrameEdicionDeTareas.grid(
+            column=0, row=0, padx=10, pady=10
+        )
+        #   Stringvar del entry de codigo para edicion de tareas
+        self.datoEntradaCodigoLabelFrameEdicionDeTareas = StringVar()
+        #   Entry de codigo
+        self.entradaCodigoLabelFrameEdicionDeTareas = Entry(
+            self.labelFrameEdicionDeTareas,
+            textvariable=self.datoEntradaCodigoLabelFrameEdicionDeTareas,
+        )
+        self.entradaCodigoLabelFrameEdicionDeTareas.grid(
+            column=1, row=0, padx=10, pady=10
+        )
+
         self.frame5 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
         self.frame6 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
 
@@ -494,7 +520,9 @@ class acceso:
         self.notebookPantallaPrincipalUsuarioLogueado.add(
             self.frame3, text="Listado de Tareas"
         )
-        self.notebookPantallaPrincipalUsuarioLogueado.add(self.frame4, text="tab4")
+        self.notebookPantallaPrincipalUsuarioLogueado.add(
+            self.frame4, text="Edicion de Tarea"
+        )
         self.notebookPantallaPrincipalUsuarioLogueado.add(self.frame5, text="tab5")
         self.notebookPantallaPrincipalUsuarioLogueado.add(self.frame6, text="tab6")
 
@@ -531,11 +559,27 @@ class acceso:
         self.comboboxPrioridadALabelFrameCargaDeTareas.set("")
 
     def consultarTareaDb(self):
-        print(
-            self.datoComboBoxEstadosLabelFrameListadoDeTareas.get(),
-            self.conexion.obtenerIdPorNombrePrioridad(self.datoComboBoxPrioridadLabelFrameListadoDeTareas.get())[0][0],
-            self.conexion.obtenerIdporNombreAsignadoa(self.datoComboBoxAsignadoALabelFrameListadoDeTareas.get())[0][0],
+        #   Obtengo los id de cada elemento elegido en los combobox(los tres)
+        datos = (
+            self.conexion.obtenerIdporNombreEstado(
+                self.datoComboBoxEstadosLabelFrameListadoDeTareas.get()
+            )[0][0],
+            self.conexion.obtenerIdPorNombrePrioridad(
+                self.datoComboBoxPrioridadLabelFrameListadoDeTareas.get()
+            )[0][0],
+            self.conexion.obtenerIdporNombreAsignadoa(
+                self.datoComboBoxAsignadoALabelFrameListadoDeTareas.get()
+            )[0][0],
         )
+        #   Tengo que traerme el id,titulo de las tareas segun datos
+        #   select id,titulo from tareas where id_estado=? and id_prioridad=? and id_asignado=?
+        resultado = self.conexion.listarTareasSegunDatos(datos)
+        self.scrooledtextLabelFrameListadoDeTareasResultado.delete("1.0", END)
+        for tupla in resultado:
+            linea_resultado = f"ID: {tupla[0]} Titulo: {tupla[1]}\n"
+            self.scrooledtextLabelFrameListadoDeTareasResultado.insert(
+                END, linea_resultado
+            )
 
 
 aplicacion = acceso()

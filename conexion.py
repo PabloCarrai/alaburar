@@ -128,6 +128,18 @@ class conexion:
         finally:
             conexion.close()
 
+    def obtenerIdporNombreEstado(self, datos):
+        #   Uso try por si falla algo
+        try:
+            conexion = self.abrir()
+            mycursor = conexion.cursor()
+            mycursor.execute("select id from estados_tarea where nombre=?", (datos,))
+            info = mycursor.fetchall()
+            return info
+        finally:
+            conexion.close()
+        pass
+
     def ingresarTareaNueva(self, datos):
         #   Uso try por si falla algo
         try:
@@ -164,6 +176,18 @@ class conexion:
             mycursor = conexion.cursor()
             sql = "select nombre from prioridades_tarea"
             mycursor.execute(sql)
+            info = mycursor.fetchall()
+            return info
+        finally:
+            conexion.close()
+
+    def listarTareasSegunDatos(self, datos):
+        #   Uso try por si falla algo
+        try:
+            conexion = self.abrir()
+            mycursor = conexion.cursor()
+            sql = "select id,titulo from tareas where id_estado=? and id_prioridad=? and id_asignado=?"
+            mycursor.execute(sql, datos)
             info = mycursor.fetchall()
             return info
         finally:
