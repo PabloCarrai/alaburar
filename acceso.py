@@ -646,7 +646,13 @@ class acceso:
             ms.showinfo("Error", "No existe tarea con ese id")
             self.entradaCodigoLabelFrameEdicionDeTareas.delete(0, END)
         else:
-            print(consulta)
+            titulo = consulta[0][1]
+            descripcion = consulta[0][2]
+            self.entradaTitulolabelFrameEdicionDeTareasDatosExistente.insert(0, titulo)
+            self.entradaDescripcionlabelFrameEdicionDeTareasDatosExistente.insert(
+                0, descripcion.rstrip("\n")
+            )
+            print(consulta, titulo)
 
 
 aplicacion = acceso()
