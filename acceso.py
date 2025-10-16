@@ -507,6 +507,64 @@ class acceso:
             column=1, row=0, padx=10, pady=10
         )
 
+        self.botonEditarTareaLabelFrameEdicionDeTareas = Button(
+            self.labelFrameEdicionDeTareas, text="Consultar", command=self.buscarTarea
+        )
+        self.botonEditarTareaLabelFrameEdicionDeTareas.grid(
+            column=1, row=1, padx=10, pady=10
+        )
+
+        self.labelFrameEdicionDeTareasDatosExistentes = LabelFrame(
+            self.frame4, text="Datos a Modificar"
+        )
+        self.labelFrameEdicionDeTareasDatosExistentes.grid(
+            column=0, row=1, padx=10, pady=10
+        )
+        self.etiquetaTitulolabelFrameEdicionDeTareasDatosExistentes = Label(
+            self.labelFrameEdicionDeTareasDatosExistentes, text="Titulo"
+        )
+        self.etiquetaTitulolabelFrameEdicionDeTareasDatosExistentes.grid(
+            column=0, row=0, padx=10, pady=10
+        )
+        self.datoEntradaTitulolabelFrameEdicionDeTareasDatosExistente = StringVar()
+        self.entradaTitulolabelFrameEdicionDeTareasDatosExistente = Entry(
+            self.labelFrameEdicionDeTareasDatosExistentes,
+            textvariable=self.datoEntradaTitulolabelFrameEdicionDeTareasDatosExistente,
+        )
+        self.entradaTitulolabelFrameEdicionDeTareasDatosExistente.grid(
+            column=1, row=0, padx=10, pady=10
+        )
+
+        self.etiquetaComentariolabelFrameEdicionDeTareasDatosExistente = Label(
+            self.labelFrameEdicionDeTareasDatosExistentes, text="Descripcion"
+        )
+        self.etiquetaComentariolabelFrameEdicionDeTareasDatosExistente.grid(
+            column=0, row=1, padx=10, pady=10
+        )
+        self.datoEntradaDescripcionlabelFrameEdicionDeTareasDatosExistente = StringVar()
+        self.entradaDescripcionlabelFrameEdicionDeTareasDatosExistente = Entry(
+            self.labelFrameEdicionDeTareasDatosExistentes,
+            textvariable=self.datoEntradaDescripcionlabelFrameEdicionDeTareasDatosExistente,
+        )
+        self.entradaDescripcionlabelFrameEdicionDeTareasDatosExistente.grid(
+            column=1, row=1, padx=10, pady=10
+        )
+
+        self.etiquetaVencimientolabelFrameEdicionDeTareasDatosExistente = Label(
+            self.labelFrameEdicionDeTareasDatosExistentes, text="Vencimiento"
+        )
+        self.etiquetaVencimientolabelFrameEdicionDeTareasDatosExistente.grid(
+            column=0, row=2, padx=10, pady=10
+        )
+
+        #   Calendario para cargar la fecha del vencimiento de la tarea
+        self.calendarioVencimientolabelFrameEdicionDeTareasDatosExistente = DateEntry(
+            self.labelFrameEdicionDeTareasDatosExistentes
+        )
+        self.calendarioVencimientolabelFrameEdicionDeTareasDatosExistente.grid(
+            column=1, row=2, padx=10, pady=10
+        )
+
         self.frame5 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
         self.frame6 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
 
@@ -580,6 +638,15 @@ class acceso:
             self.scrooledtextLabelFrameListadoDeTareasResultado.insert(
                 END, linea_resultado
             )
+
+    def buscarTarea(self):
+        dato = (self.datoEntradaCodigoLabelFrameEdicionDeTareas.get(),)
+        consulta = self.conexion.buscarTarea(dato)
+        if len(consulta) == 0:
+            ms.showinfo("Error", "No existe tarea con ese id")
+            self.entradaCodigoLabelFrameEdicionDeTareas.delete(0, END)
+        else:
+            print(consulta)
 
 
 aplicacion = acceso()

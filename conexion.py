@@ -192,3 +192,15 @@ class conexion:
             return info
         finally:
             conexion.close()
+
+    def buscarTarea(self,datos):
+        #   Uso try por si falla algo
+        try:
+            conexion = self.abrir()
+            mycursor = conexion.cursor()
+            sql = "select * from tareas where id=?"
+            mycursor.execute(sql, datos)
+            info = mycursor.fetchall()
+            return info
+        finally:
+            conexion.close()
