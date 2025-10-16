@@ -204,3 +204,14 @@ class conexion:
             return info
         finally:
             conexion.close()
+
+    def obtenerNombreAsignadoaporid(self,dato):
+        #   Uso try por si falla algo
+        try:
+            conexion = self.abrir()
+            mycursor = conexion.cursor()
+            mycursor.execute("select nombre from usuarios where id=?",(dato,))
+            info = mycursor.fetchall()
+            return info
+        finally:
+            conexion.close()

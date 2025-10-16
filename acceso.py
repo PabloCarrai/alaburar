@@ -4,7 +4,7 @@ import conexion
 from tkinter import messagebox as ms
 from tkinter import scrolledtext as sc
 from tkcalendar import DateEntry
-import sqlite3
+from datetime import datetime
 
 
 class acceso:
@@ -565,6 +565,53 @@ class acceso:
             column=1, row=2, padx=10, pady=10
         )
 
+        self.etiquetaAsignadoAlabelFrameEdicionDeTareasDatosExistente = Label(
+            self.labelFrameEdicionDeTareasDatosExistentes, text="Asignado a"
+        )
+        self.etiquetaAsignadoAlabelFrameEdicionDeTareasDatosExistente.grid(
+            column=0, row=3, padx=10, pady=10
+        )
+
+        datoscombobox = self.conexion.listarUsuarios()
+        self.datoComboboxAsignadoAlabelFrameEdicionDeTareasDatosExistente = StringVar()
+        self.comboboxAsignadoAlabelFrameEdicionDeTareasDatosExistente = ttk.Combobox(
+            self.labelFrameEdicionDeTareasDatosExistentes,
+            textvariable=self.datoComboboxAsignadoAlabelFrameEdicionDeTareasDatosExistente,
+            values=datoscombobox,
+        )
+        self.comboboxAsignadoAlabelFrameEdicionDeTareasDatosExistente.grid(
+            column=1, row=3, padx=10, pady=10
+        )
+
+        self.etiquetaPrioridadDeTarealabelFrameEdicionDeTareasDatosExistente=Label(self.labelFrameEdicionDeTareasDatosExistentes,text="Estado")
+        self.etiquetaPrioridadDeTarealabelFrameEdicionDeTareasDatosExistente.grid(
+            column=0, row=4, padx=10, pady=10
+        )
+
+
+
+
+        datoscomboboxEstados = self.conexion.listarPrioridades()
+        self.datoComboboxEstadoslabelFrameEdicionDeTareasDatosExistente = StringVar()
+        self.comboboxEstadoslabelFrameEdicionDeTareasDatosExistente = ttk.Combobox(
+            self.labelFrameEdicionDeTareasDatosExistentes,
+            textvariable=self.datoComboboxEstadoslabelFrameEdicionDeTareasDatosExistente,
+            values=datoscomboboxEstados,
+        )
+        self.comboboxEstadoslabelFrameEdicionDeTareasDatosExistente.grid(
+            column=1, row=4, padx=10, pady=10
+        )
+
+
+
+
+
+
+
+
+
+      
+
         self.frame5 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
         self.frame6 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
 
@@ -648,11 +695,31 @@ class acceso:
         else:
             titulo = consulta[0][1]
             descripcion = consulta[0][2]
+            #   Cadena de la fecha original año mes dia
+            cadena_fecha_original = consulta[0][3]
+            #   Formato original
+            formato_original = "%Y-%m-%d"
+            #   Tranformo el string a una fecha con formato
+            objeto_fecha = datetime.strptime(cadena_fecha_original, formato_original)
+            #   Este es el formato que necesito
+            formato_salida = "%d/%m/%y"
+            #   Hago la conversion
+            cadena_Fecha_formateada = objeto_fecha.strftime(formato_salida)
+            #   Esto va a guardar consultando el id de la tarea a quien se le asigno la misma(el nombre)
+            asignadoA = self.conexion.obtenerNombreAsignadoaporid(consulta[0][6])
+            #   Aca hago el set de el nombre del asignado a por id
+            self.comboboxAsignadoAlabelFrameEdicionDeTareasDatosExistente.set(asignadoA)
+            #   Pongo los datos de la tarea
+            #   Primero titulo
             self.entradaTitulolabelFrameEdicionDeTareasDatosExistente.insert(0, titulo)
+            #   Descripcion
             self.entradaDescripcionlabelFrameEdicionDeTareasDatosExistente.insert(
                 0, descripcion.rstrip("\n")
             )
-            print(consulta, titulo)
+            #   Seteo la cadena al date_entry
+            self.calendarioVencimientolabelFrameEdicionDeTareasDatosExistente.set_date(
+                cadena_Fecha_formateada
+            )
 
 
 aplicacion = acceso()
