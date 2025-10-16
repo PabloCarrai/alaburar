@@ -206,25 +206,19 @@ class acceso:
                     ms.showinfo("Vamos", "Nuevo Usuario")
 
     def pantallaUsuarioLogueado(self):
-        #   Por ahora solo los muestro para onda ver si hay o no usuario
-        print(
-            self.idUsuarioLogueado,
-            self.nombreUsuarioLogueado,
-            self.correoUsuarioLogueado,
-        )
+        #   Esta seria la ventana principal del usuario una vez pasado el login
         self.ventanaPantallaPrincipalUsuarioLogueado = Toplevel()
-
         #   Arrancamos con el notebook
         self.notebookPantallaPrincipalUsuarioLogueado = ttk.Notebook(
             self.ventanaPantallaPrincipalUsuarioLogueado
         )
+        #   El notebook es para todas las pantallas
         self.notebookPantallaPrincipalUsuarioLogueado.grid(padx=10, pady=10)
         #   Aca defino los frame para cada seccion(este es para datos de sesion)
         self.frame1 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
         #   Defino el labelframe para datos de session
         self.labelframeDatosDeSesion = LabelFrame(self.frame1, text="Datos de Session")
         self.labelframeDatosDeSesion.grid(column=0, row=0, padx=10, pady=10)
-
         #   Agrego una etiqueta id Usuario
         self.etiquetaidUsuarioLogueadoLabelFrameDatosDeSesion = Label(
             self.labelframeDatosDeSesion, text="Id:"
@@ -239,7 +233,6 @@ class acceso:
         self.datoetiquetaidUsuarioLogueadoLabelFrameDatoDeSesion.grid(
             column=1, row=0, padx=10, pady=10
         )
-
         #   Aca va la etiqueda del nombre
         self.etiquetaNombreUsuarioLogueadoLabelFrameDatoDeSesion = Label(
             self.labelframeDatosDeSesion, text="Nombre:"
@@ -247,7 +240,6 @@ class acceso:
         self.etiquetaNombreUsuarioLogueadoLabelFrameDatoDeSesion.grid(
             column=0, row=2, padx=10, pady=10
         )
-
         #   Aca va la etiqueta con el dato nombre
         self.datoNombreUsuarioLogueadoLabelFrameDatoDeSesion = Label(
             self.labelframeDatosDeSesion, text=self.nombreUsuarioLogueado
@@ -255,7 +247,6 @@ class acceso:
         self.datoNombreUsuarioLogueadoLabelFrameDatoDeSesion.grid(
             column=1, row=2, padx=10, pady=10
         )
-
         #   Aca va la etiqueta correo
         self.etiquetaCorreoUsuarioLogueadoLabelFrameDatoDeSesion = Label(
             self.labelframeDatosDeSesion, text="Correo"
@@ -263,7 +254,6 @@ class acceso:
         self.etiquetaCorreoUsuarioLogueadoLabelFrameDatoDeSesion.grid(
             column=0, row=3, padx=10, pady=10
         )
-
         #   Aca va el dato de la etiqueta Correo
         self.datoCorreoUsuarioLogueadoLabelFrameDatoDeSesion = Label(
             self.labelframeDatosDeSesion, text=self.correoUsuarioLogueado
@@ -271,14 +261,11 @@ class acceso:
         self.datoCorreoUsuarioLogueadoLabelFrameDatoDeSesion.grid(
             column=1, row=3, padx=10, pady=10
         )
-
-        #   Aca defino los frame para cada seccion(Este es para cargar la tarea)
+        #   Este frame lo usamos en la seccion carga de tarea
         self.frame2 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
-
         #   Este es el labelframe para esta seccion(Carga de tarea)
         self.labelframeCargaDeTareas = LabelFrame(self.frame2, text="Carga de Tareas")
         self.labelframeCargaDeTareas.grid(column=0, row=0, padx=10, pady=10)
-
         #   Etiqueta Titulo de la seccion Carga de Tarea
         self.etiquetaTituloTareaLabelFrameCargaDeTareas = Label(
             self.labelframeCargaDeTareas, text="Titulo"
@@ -354,7 +341,7 @@ class acceso:
         #   Stringvar para el combobox de Prioridades
         self.datoComboBoxPrioridadLabelFrameCargaDeTarea = StringVar()
         #   Aca tomo los nombres de las prioridades para mostrar en el combobox
-        prioridadComboBox = self.conexion.listarPrioridades()
+        prioridadComboBox = self.conexion.listarPrioridad()
         #   Armo el combobox de prioridades
         self.comboboxPrioridadALabelFrameCargaDeTareas = ttk.Combobox(
             self.labelframeCargaDeTareas,
@@ -372,7 +359,6 @@ class acceso:
         self.botonCrearTareaLabelFrameCargaDeTareas.grid(
             column=1, row=6, padx=10, pady=10
         )
-
         #   Frame del listado de tareas
         self.frame3 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
         #   Este es el label frame del listado de tareas
@@ -387,7 +373,6 @@ class acceso:
         self.etiquetaEstadosDeTareaLabelFrameListadoDeTareas.grid(
             column=0, row=0, padx=10, pady=10
         )
-
         #   Stringvar para el combobox de Estados
         self.datoComboBoxEstadosLabelFrameListadoDeTareas = StringVar()
         #   Aca tomo los nombres de las Estados para mostrar en el combobox
@@ -409,7 +394,6 @@ class acceso:
         self.etiquetaPrioridadDeTareaLabelFrameListadoDeTareas.grid(
             column=0, row=1, padx=10, pady=10
         )
-
         #   Stringvar para el combobox de Prioridad
         self.datoComboBoxPrioridadLabelFrameListadoDeTareas = StringVar()
         #   Aca tomo los nombres de las Prioridad para mostrar en el combobox
@@ -433,7 +417,6 @@ class acceso:
         self.etiquetaAsignadoADeTareaLabelFrameListadoDeTareas.grid(
             column=0, row=2, padx=10, pady=10
         )
-
         #   Stringvar para el combobox de AsignadoA
         self.datoComboBoxAsignadoALabelFrameListadoDeTareas = StringVar()
         #   Aca tomo los nombres de las AsignadoA para mostrar en el combobox
@@ -459,36 +442,32 @@ class acceso:
         self.botonConsultarLabelFrameListadoDeTarea.grid(
             column=1, row=3, padx=10, pady=10
         )
-
         #   Aca va lo del labelframeResultado
         self.labelframeListadoDeTareasResultado = LabelFrame(
             self.frame3, text="Resultado"
         )
         self.labelframeListadoDeTareasResultado.grid(column=0, row=1, padx=10, pady=10)
-
+        #   Etiqueta Tareas
         self.etiquetaLabelFrameListadoDeTareasResultado = Label(
             self.labelframeListadoDeTareasResultado, text="Tareas"
         )
         self.etiquetaLabelFrameListadoDeTareasResultado.grid(
             column=0, row=0, padx=10, pady=10
         )
-
+        #   Scrooledtext para listar las tareas
         self.scrooledtextLabelFrameListadoDeTareasResultado = sc.ScrolledText(
             self.labelframeListadoDeTareasResultado, width=40, height=10
         )
         self.scrooledtextLabelFrameListadoDeTareasResultado.grid(
             column=1, row=0, padx=10, pady=10
         )
-
         #   frame4 es para Edicion de Tareas
         self.frame4 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
         #   Labelframe de Edicion de tareas
         self.labelFrameEdicionDeTareas = LabelFrame(
             self.frame4, text="Edicion de Tareas"
         )
-
         self.labelFrameEdicionDeTareas.grid(column=0, row=0, padx=10, pady=10)
-
         #   Etiqueta codigo para edicion de tareas
         self.etiquetaCodigoTareaLabelFrameEdicionDeTareas = Label(
             self.labelFrameEdicionDeTareas, text="Codigo"
@@ -506,26 +485,28 @@ class acceso:
         self.entradaCodigoLabelFrameEdicionDeTareas.grid(
             column=1, row=0, padx=10, pady=10
         )
-
+        #   Boto consulta
         self.botonEditarTareaLabelFrameEdicionDeTareas = Button(
             self.labelFrameEdicionDeTareas, text="Consultar", command=self.buscarTarea
         )
         self.botonEditarTareaLabelFrameEdicionDeTareas.grid(
             column=1, row=1, padx=10, pady=10
         )
-
+        #   Labelframe datos a modificar
         self.labelFrameEdicionDeTareasDatosExistentes = LabelFrame(
             self.frame4, text="Datos a Modificar"
         )
         self.labelFrameEdicionDeTareasDatosExistentes.grid(
             column=0, row=1, padx=10, pady=10
         )
+        #   Etiqueta titulo
         self.etiquetaTitulolabelFrameEdicionDeTareasDatosExistentes = Label(
             self.labelFrameEdicionDeTareasDatosExistentes, text="Titulo"
         )
         self.etiquetaTitulolabelFrameEdicionDeTareasDatosExistentes.grid(
             column=0, row=0, padx=10, pady=10
         )
+        #   Stringvar titulo
         self.datoEntradaTitulolabelFrameEdicionDeTareasDatosExistente = StringVar()
         self.entradaTitulolabelFrameEdicionDeTareasDatosExistente = Entry(
             self.labelFrameEdicionDeTareasDatosExistentes,
@@ -534,13 +515,14 @@ class acceso:
         self.entradaTitulolabelFrameEdicionDeTareasDatosExistente.grid(
             column=1, row=0, padx=10, pady=10
         )
-
+        #   Etiqueta Descripcion
         self.etiquetaComentariolabelFrameEdicionDeTareasDatosExistente = Label(
             self.labelFrameEdicionDeTareasDatosExistentes, text="Descripcion"
         )
         self.etiquetaComentariolabelFrameEdicionDeTareasDatosExistente.grid(
             column=0, row=1, padx=10, pady=10
         )
+        #   Stringvar Descripcion
         self.datoEntradaDescripcionlabelFrameEdicionDeTareasDatosExistente = StringVar()
         self.entradaDescripcionlabelFrameEdicionDeTareasDatosExistente = Entry(
             self.labelFrameEdicionDeTareasDatosExistentes,
@@ -549,14 +531,13 @@ class acceso:
         self.entradaDescripcionlabelFrameEdicionDeTareasDatosExistente.grid(
             column=1, row=1, padx=10, pady=10
         )
-
+        #   Etiqueta Vencimiento
         self.etiquetaVencimientolabelFrameEdicionDeTareasDatosExistente = Label(
             self.labelFrameEdicionDeTareasDatosExistentes, text="Vencimiento"
         )
         self.etiquetaVencimientolabelFrameEdicionDeTareasDatosExistente.grid(
             column=0, row=2, padx=10, pady=10
         )
-
         #   Calendario para cargar la fecha del vencimiento de la tarea
         self.calendarioVencimientolabelFrameEdicionDeTareasDatosExistente = DateEntry(
             self.labelFrameEdicionDeTareasDatosExistentes
@@ -564,14 +545,14 @@ class acceso:
         self.calendarioVencimientolabelFrameEdicionDeTareasDatosExistente.grid(
             column=1, row=2, padx=10, pady=10
         )
-
+        #   Etiqueta Asignado a
         self.etiquetaAsignadoAlabelFrameEdicionDeTareasDatosExistente = Label(
             self.labelFrameEdicionDeTareasDatosExistentes, text="Asignado a"
         )
         self.etiquetaAsignadoAlabelFrameEdicionDeTareasDatosExistente.grid(
             column=0, row=3, padx=10, pady=10
         )
-
+        #   Combobox Asignado a
         datoscombobox = self.conexion.listarUsuarios()
         self.datoComboboxAsignadoAlabelFrameEdicionDeTareasDatosExistente = StringVar()
         self.comboboxAsignadoAlabelFrameEdicionDeTareasDatosExistente = ttk.Combobox(
@@ -582,16 +563,16 @@ class acceso:
         self.comboboxAsignadoAlabelFrameEdicionDeTareasDatosExistente.grid(
             column=1, row=3, padx=10, pady=10
         )
-
-        self.etiquetaPrioridadDeTarealabelFrameEdicionDeTareasDatosExistente=Label(self.labelFrameEdicionDeTareasDatosExistentes,text="Estado")
+        #   Etiqueta Prioridad
+        self.etiquetaPrioridadDeTarealabelFrameEdicionDeTareasDatosExistente = Label(
+            self.labelFrameEdicionDeTareasDatosExistentes, text="Estado"
+        )
         self.etiquetaPrioridadDeTarealabelFrameEdicionDeTareasDatosExistente.grid(
             column=0, row=4, padx=10, pady=10
         )
 
-
-
-
-        datoscomboboxEstados = self.conexion.listarPrioridades()
+        #   Parte del combobox Prioridades
+        datoscomboboxEstados = self.conexion.obtenerNombresEstados()
         self.datoComboboxEstadoslabelFrameEdicionDeTareasDatosExistente = StringVar()
         self.comboboxEstadoslabelFrameEdicionDeTareasDatosExistente = ttk.Combobox(
             self.labelFrameEdicionDeTareasDatosExistentes,
@@ -601,16 +582,6 @@ class acceso:
         self.comboboxEstadoslabelFrameEdicionDeTareasDatosExistente.grid(
             column=1, row=4, padx=10, pady=10
         )
-
-
-
-
-
-
-
-
-
-      
 
         self.frame5 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
         self.frame6 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
@@ -664,27 +635,33 @@ class acceso:
         self.comboboxPrioridadALabelFrameCargaDeTareas.set("")
 
     def consultarTareaDb(self):
-        #   Obtengo los id de cada elemento elegido en los combobox(los tres)
-        datos = (
-            self.conexion.obtenerIdporNombreEstado(
-                self.datoComboBoxEstadosLabelFrameListadoDeTareas.get()
-            )[0][0],
-            self.conexion.obtenerIdPorNombrePrioridad(
-                self.datoComboBoxPrioridadLabelFrameListadoDeTareas.get()
-            )[0][0],
-            self.conexion.obtenerIdporNombreAsignadoa(
-                self.datoComboBoxAsignadoALabelFrameListadoDeTareas.get()
-            )[0][0],
-        )
-        #   Tengo que traerme el id,titulo de las tareas segun datos
-        #   select id,titulo from tareas where id_estado=? and id_prioridad=? and id_asignado=?
-        resultado = self.conexion.listarTareasSegunDatos(datos)
-        self.scrooledtextLabelFrameListadoDeTareasResultado.delete("1.0", END)
-        for tupla in resultado:
-            linea_resultado = f"ID: {tupla[0]} Titulo: {tupla[1]}\n"
-            self.scrooledtextLabelFrameListadoDeTareasResultado.insert(
-                END, linea_resultado
+        if ((not self.datoComboBoxEstadosLabelFrameListadoDeTareas.get()) or (not self.datoComboBoxPrioridadLabelFrameListadoDeTareas.get()) or (not self.datoComboBoxAsignadoALabelFrameListadoDeTareas.get())):
+            ms.showinfo("Error","No se ha elegido ninguna opcion en los desplegables")
+        else:        
+            #   Obtengo los id de cada elemento elegido en los combobox(los tres)
+            datos = (
+                self.conexion.obtenerIdporNombreEstado(
+                    self.datoComboBoxEstadosLabelFrameListadoDeTareas.get()
+                )[0][0],
+                self.conexion.obtenerIdPorNombrePrioridad(
+                    self.datoComboBoxPrioridadLabelFrameListadoDeTareas.get()
+                )[0][0],
+                self.conexion.obtenerIdporNombreAsignadoa(
+                    self.datoComboBoxAsignadoALabelFrameListadoDeTareas.get()
+                )[0][0],
             )
+            #   Tengo que traerme el id,titulo de las tareas segun datos
+            #   select id,titulo from tareas where id_estado=? and id_prioridad=? and id_asignado=?
+            resultado = self.conexion.listarTareasSegunDatos(datos)
+        if len(resultado)==0:
+            ms.showinfo("Error","No tenemos tareas segun esas condiciones")
+        else:
+            self.scrooledtextLabelFrameListadoDeTareasResultado.delete("1.0", END)
+            for tupla in resultado:
+                linea_resultado = f"ID: {tupla[0]} Titulo: {tupla[1]}\n"
+                self.scrooledtextLabelFrameListadoDeTareasResultado.insert(
+                    END, linea_resultado
+                )
 
     def buscarTarea(self):
         dato = (self.datoEntradaCodigoLabelFrameEdicionDeTareas.get(),)
@@ -693,6 +670,12 @@ class acceso:
             ms.showinfo("Error", "No existe tarea con ese id")
             self.entradaCodigoLabelFrameEdicionDeTareas.delete(0, END)
         else:
+            self.entradaTitulolabelFrameEdicionDeTareasDatosExistente.delete(0, END)
+            self.entradaDescripcionlabelFrameEdicionDeTareasDatosExistente.delete(
+                0, END
+            )
+            self.comboboxEstadoslabelFrameEdicionDeTareasDatosExistente.set("")
+
             titulo = consulta[0][1]
             descripcion = consulta[0][2]
             #   Cadena de la fecha original año mes dia
@@ -719,6 +702,13 @@ class acceso:
             #   Seteo la cadena al date_entry
             self.calendarioVencimientolabelFrameEdicionDeTareasDatosExistente.set_date(
                 cadena_Fecha_formateada
+            )
+            nombreEstadoTareaPorId = self.conexion.obtenerNombreEstadoPorId(
+                consulta[0][7]
+            )
+            #   Aca tengo que setear el nombre del estado de la tarea en base a su id
+            self.comboboxEstadoslabelFrameEdicionDeTareasDatosExistente.set(
+                nombreEstadoTareaPorId
             )
 
 
