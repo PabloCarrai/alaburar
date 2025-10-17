@@ -583,6 +583,13 @@ class acceso:
             column=1, row=4, padx=10, pady=10
         )
 
+        self.botonActualizarTarealabelFrameEdicionDeTareasDatosExistente = Button(
+            self.labelFrameEdicionDeTareasDatosExistentes, text="Actualizar"
+        )
+        self.botonActualizarTarealabelFrameEdicionDeTareasDatosExistente.grid(
+            column=1, row=5, padx=10, pady=10
+        )
+
         self.frame5 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
         self.frame6 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
 
@@ -635,9 +642,13 @@ class acceso:
         self.comboboxPrioridadALabelFrameCargaDeTareas.set("")
 
     def consultarTareaDb(self):
-        if ((not self.datoComboBoxEstadosLabelFrameListadoDeTareas.get()) or (not self.datoComboBoxPrioridadLabelFrameListadoDeTareas.get()) or (not self.datoComboBoxAsignadoALabelFrameListadoDeTareas.get())):
-            ms.showinfo("Error","No se ha elegido ninguna opcion en los desplegables")
-        else:        
+        if (
+            (not self.datoComboBoxEstadosLabelFrameListadoDeTareas.get())
+            or (not self.datoComboBoxPrioridadLabelFrameListadoDeTareas.get())
+            or (not self.datoComboBoxAsignadoALabelFrameListadoDeTareas.get())
+        ):
+            ms.showinfo("Error", "No se ha elegido ninguna opcion en los desplegables")
+        else:
             #   Obtengo los id de cada elemento elegido en los combobox(los tres)
             datos = (
                 self.conexion.obtenerIdporNombreEstado(
@@ -653,8 +664,8 @@ class acceso:
             #   Tengo que traerme el id,titulo de las tareas segun datos
             #   select id,titulo from tareas where id_estado=? and id_prioridad=? and id_asignado=?
             resultado = self.conexion.listarTareasSegunDatos(datos)
-        if len(resultado)==0:
-            ms.showinfo("Error","No tenemos tareas segun esas condiciones")
+        if len(resultado) == 0:
+            ms.showinfo("Error", "No tenemos tareas segun esas condiciones")
         else:
             self.scrooledtextLabelFrameListadoDeTareasResultado.delete("1.0", END)
             for tupla in resultado:
