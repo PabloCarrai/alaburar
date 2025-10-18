@@ -60,7 +60,7 @@ class acceso:
 
     def pantallaRegistroUsuario(self):
         #   Levantamos una pantalla para el login
-        self.ventanaRegistroUsuario = Toplevel(self.ventana)
+        self.ventanaRegistroUsuario = Toplevel()
         #   Seteamos un titulo
         self.ventanaRegistroUsuario.title("Registro de Usuario")
         #   Le agregamos un labelframe
@@ -584,7 +584,9 @@ class acceso:
         )
 
         self.botonActualizarTarealabelFrameEdicionDeTareasDatosExistente = Button(
-            self.labelFrameEdicionDeTareasDatosExistentes, text="Actualizar"
+            self.labelFrameEdicionDeTareasDatosExistentes,
+            text="Actualizar",
+            command=self.actualizarTarea,
         )
         self.botonActualizarTarealabelFrameEdicionDeTareasDatosExistente.grid(
             column=1, row=5, padx=10, pady=10
@@ -676,7 +678,7 @@ class acceso:
 
     def buscarTarea(self):
         dato = (self.datoEntradaCodigoLabelFrameEdicionDeTareas.get(),)
-        consulta = self.conexion.buscarTarea(dato)
+        consulta = self.conexion.buscarTareaendb(dato)
         if len(consulta) == 0:
             ms.showinfo("Error", "No existe tarea con ese id")
             self.entradaCodigoLabelFrameEdicionDeTareas.delete(0, END)
@@ -699,6 +701,7 @@ class acceso:
             formato_salida = "%d/%m/%y"
             #   Hago la conversion
             cadena_Fecha_formateada = objeto_fecha.strftime(formato_salida)
+            print(cadena_Fecha_formateada)
             #   Esto va a guardar consultando el id de la tarea a quien se le asigno la misma(el nombre)
             asignadoA = self.conexion.obtenerNombreAsignadoaporid(consulta[0][6])
             #   Aca hago el set de el nombre del asignado a por id
@@ -721,6 +724,27 @@ class acceso:
             self.comboboxEstadoslabelFrameEdicionDeTareasDatosExistente.set(
                 nombreEstadoTareaPorId
             )
+
+    def actualizarTarea(self):
+        idAsignadoA = self.conexion.obtenerIdporNombreAsignadoa(
+            self.datoComboboxAsignadoAlabelFrameEdicionDeTareasDatosExistente.get()
+        )
+        idEstado = self.conexion.obtenerIdporNombreEstado(
+            self.datoComboboxEstadoslabelFrameEdicionDeTareasDatosExistente.get()
+        )
+        datos = (
+            self.datoEntradaTitulolabelFrameEdicionDeTareasDatosExistente.get(),
+            self.datoEntradaDescripcionlabelFrameEdicionDeTareasDatosExistente.get(),
+            self.calendarioVencimientolabelFrameEdicionDeTareasDatosExistente.get(),
+            self.idUsuarioLogueado,
+            idAsignadoA[0][0],
+            idEstado[0][0],
+            self.datoEntradaCodigoLabelFrameEdicionDeTareas.get(),
+        )
+        print(datos)
+        print(self.calendarioVencimientolabelFrameEdicionDeTareasDatosExistente.get())
+        #self.conexion.actualizarTarea(datos)
+        #ms.showinfo("Hecho", "Tarea modificada")
 
 
 aplicacion = acceso()

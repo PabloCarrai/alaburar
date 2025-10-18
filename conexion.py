@@ -221,7 +221,7 @@ class conexion:
             #   Cierro la conexion
             conexion.close()
 
-    def buscarTarea(self, datos):
+    def buscarTareaendb(self, datos):
         #   Traigo la tarea en base al id de la misma
         try:
             #   Abro la conexion
@@ -286,3 +286,17 @@ class conexion:
             #   Cierro la conexion
             conexion.close()
 
+    def actualizarTarea(self, datos):
+        #   Traigo el nombre del usuario en base a su id en usuarios
+        try:
+            #   Abro la conexion
+            conexion = self.abrir()
+            #   Genero el cursor
+            mycursor = conexion.cursor()
+            #   Busco los nombres en base al id
+            mycursor.execute("update tareas set titulo=?, descripcion=?,fecha_vencimiento=?,id_creador=?,id_asignado=?,id_estado=? where id=?", datos)
+            #   Ejecuto los cambios
+            conexion.commit()
+        finally:
+            #   Cierro la conexion
+            conexion.close()
