@@ -305,7 +305,7 @@ class acceso:
         )
         #   Calendario para cargar la fecha del vencimiento de la tarea
         self.calendarioTareaLabelFrameCargaDeTareas = DateEntry(
-            self.labelframeCargaDeTareas
+            self.labelframeCargaDeTareas, date_pattern="yyyy-mm-dd"
         )
         self.calendarioTareaLabelFrameCargaDeTareas.grid(
             column=1, row=3, padx=10, pady=10
@@ -540,7 +540,7 @@ class acceso:
         )
         #   Calendario para cargar la fecha del vencimiento de la tarea
         self.calendarioVencimientolabelFrameEdicionDeTareasDatosExistente = DateEntry(
-            self.labelFrameEdicionDeTareasDatosExistentes
+            self.labelFrameEdicionDeTareasDatosExistentes, date_pattern="yyyy-mm-dd"
         )
         self.calendarioVencimientolabelFrameEdicionDeTareasDatosExistente.grid(
             column=1, row=2, padx=10, pady=10
@@ -688,7 +688,6 @@ class acceso:
                 0, END
             )
             self.comboboxEstadoslabelFrameEdicionDeTareasDatosExistente.set("")
-
             titulo = consulta[0][1]
             descripcion = consulta[0][2]
             #   Cadena de la fecha original año mes dia
@@ -697,11 +696,8 @@ class acceso:
             formato_original = "%Y-%m-%d"
             #   Tranformo el string a una fecha con formato
             objeto_fecha = datetime.strptime(cadena_fecha_original, formato_original)
-            #   Este es el formato que necesito
-            formato_salida = "%d/%m/%y"
             #   Hago la conversion
-            cadena_Fecha_formateada = objeto_fecha.strftime(formato_salida)
-            print(cadena_Fecha_formateada)
+            cadena_Fecha_formateada = objeto_fecha.strftime(formato_original)
             #   Esto va a guardar consultando el id de la tarea a quien se le asigno la misma(el nombre)
             asignadoA = self.conexion.obtenerNombreAsignadoaporid(consulta[0][6])
             #   Aca hago el set de el nombre del asignado a por id
@@ -743,8 +739,8 @@ class acceso:
         )
         print(datos)
         print(self.calendarioVencimientolabelFrameEdicionDeTareasDatosExistente.get())
-        #self.conexion.actualizarTarea(datos)
-        #ms.showinfo("Hecho", "Tarea modificada")
+        self.conexion.actualizarTarea(datos)
+        ms.showinfo("Hecho", "Tarea modificada")
 
 
 aplicacion = acceso()
