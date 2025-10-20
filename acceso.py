@@ -591,10 +591,7 @@ class acceso:
         self.botonActualizarTarealabelFrameEdicionDeTareasDatosExistente.grid(
             column=1, row=5, padx=10, pady=10
         )
-
-        self.frame5 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
-        self.frame6 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
-
+        
         #   Agrego los frames al notebook
         self.notebookPantallaPrincipalUsuarioLogueado.add(
             self.frame1, text="Datos De Sesion"
@@ -608,9 +605,7 @@ class acceso:
         self.notebookPantallaPrincipalUsuarioLogueado.add(
             self.frame4, text="Edicion de Tarea"
         )
-        self.notebookPantallaPrincipalUsuarioLogueado.add(self.frame5, text="tab5")
-        self.notebookPantallaPrincipalUsuarioLogueado.add(self.frame6, text="tab6")
-
+        
     def crearTarea(self):
 
         idAsinadoA = self.conexion.obtenerIdporNombreAsignadoa(
