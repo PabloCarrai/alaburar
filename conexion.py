@@ -300,3 +300,21 @@ class conexion:
         finally:
             #   Cierro la conexion
             conexion.close()
+
+    def obtenerTareaPorId(self,datos):
+        #   Traigo el nombre del usuario en base a su id en usuarios
+        try:
+            #   Abro la conexion
+            conexion = self.abrir()
+            #   Genero el cursor
+            mycursor = conexion.cursor()
+            #   Busco Tarea por id
+            mycursor.execute("select titulo,descripcion,usuarios.nombre from tareas join usuarios on tareas.id=usuarios.id where tareas.id=?", datos)
+            info = mycursor.fetchall()
+            #   Retorno la info
+            return info
+
+
+        finally:
+            #   Cierro la conexion
+            conexion.close()

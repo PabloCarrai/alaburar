@@ -485,7 +485,7 @@ class acceso:
         self.entradaCodigoLabelFrameEdicionDeTareas.grid(
             column=1, row=0, padx=10, pady=10
         )
-        #   Boto consulta
+        #   Botom consulta
         self.botonEditarTareaLabelFrameEdicionDeTareas = Button(
             self.labelFrameEdicionDeTareas, text="Consultar", command=self.buscarTarea
         )
@@ -591,7 +591,101 @@ class acceso:
         self.botonActualizarTarealabelFrameEdicionDeTareasDatosExistente.grid(
             column=1, row=5, padx=10, pady=10
         )
-        
+
+        #   Arranco el tab Eliminar la tarea
+
+        #   frame5 es para Eliminar de Tareas
+        self.frame5 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
+        #   Labelframe de Eliminar de tareas
+        self.labelFrameEliminarTareas = LabelFrame(self.frame5, text="Eliminar Tarea")
+        self.labelFrameEliminarTareas.grid(column=0, row=0, padx=10, pady=10)
+
+        self.etiquetaCodigolabelFrameEliminarTareas = Label(
+            self.labelFrameEliminarTareas, text="Codigo"
+        )
+        self.etiquetaCodigolabelFrameEliminarTareas.grid(
+            column=0, row=0, padx=10, pady=10
+        )
+
+        #   Stringvar de Codigo en Eliminar Tarea
+        self.datoEntradaCodigolabelFrameEliminarTareas = StringVar()
+        #   Entry de Codigo eliminar tarea
+        self.entradaCodigolabelFrameEliminarTareas = Entry(
+            self.labelFrameEliminarTareas,
+            textvariable=self.datoEntradaCodigolabelFrameEliminarTareas,
+        )
+        self.entradaCodigolabelFrameEliminarTareas.grid(
+            column=1, row=0, padx=10, pady=10
+        )
+
+        #   Boton consultar codigo tareas
+        self.botonConsultarCodigolabelFrameEliminarTareas = Button(
+            self.labelFrameEliminarTareas,
+            text="Consultar",
+            command=self.consultarTareaPorId,
+        )
+
+        self.botonConsultarCodigolabelFrameEliminarTareas.grid(
+            column=1, row=1, padx=10, pady=10
+        )
+
+        #   Labelframe de Eliminar de tareas
+        self.labelFrameEliminarTareasListadoTareas = LabelFrame(
+            self.frame5, text="Tarea"
+        )
+        self.labelFrameEliminarTareasListadoTareas.grid(
+            column=1, row=0, padx=10, pady=10
+        )
+
+        self.etiquetaTituloTarealabelFrameEliminarTareasListadoTareas = Label(
+            self.labelFrameEliminarTareasListadoTareas, text="Titulo:"
+        )
+        self.etiquetaTituloTarealabelFrameEliminarTareasListadoTareas.grid(
+            column=0, row=0, padx=10, pady=10
+        )
+
+        self.datoEtiquetaTituloTarealabelFrameEliminarTareasListadoTareas = Label(
+            self.labelFrameEliminarTareasListadoTareas, text=""
+        )
+        self.datoEtiquetaTituloTarealabelFrameEliminarTareasListadoTareas.grid(
+            column=1, row=0, padx=10, pady=10
+        )
+
+        self.etiquetaDescripcionTarealabelFrameEliminarTareasListadoTareas = Label(
+            self.labelFrameEliminarTareasListadoTareas, text="Descripcion"
+        )
+        self.etiquetaDescripcionTarealabelFrameEliminarTareasListadoTareas.grid(
+            column=0, row=1, padx=10, pady=10
+        )
+
+        self.datoEtiquetaDescripcionTarealabelFrameEliminarTareasListadoTareas = Label(
+            self.labelFrameEliminarTareasListadoTareas, text=""
+        )
+        self.datoEtiquetaDescripcionTarealabelFrameEliminarTareasListadoTareas.grid(
+            column=1, row=1, padx=10, pady=10
+        )
+
+        self.etiquetaAsignadoAlabelFrameEliminarTareasListadoTareas = Label(
+            self.labelFrameEliminarTareasListadoTareas, text="Asignado A"
+        )
+        self.etiquetaAsignadoAlabelFrameEliminarTareasListadoTareas.grid(
+            column=0, row=2, padx=10, pady=10
+        )
+
+        self.datoEtiquetaAsignadoAlabelFrameEliminarTareasListadoTareas = Label(
+            self.labelFrameEliminarTareasListadoTareas, text=""
+        )
+        self.datoEtiquetaAsignadoAlabelFrameEliminarTareasListadoTareas.grid(
+            column=1, row=2, padx=10, pady=10
+        )
+
+        self.botonEliminarTarealabelFrameEliminarTareasListadoTareas = Button(
+            self.labelFrameEliminarTareasListadoTareas, text="Eliminar"
+        )
+        self.botonEliminarTarealabelFrameEliminarTareasListadoTareas.grid(
+            column=1, row=3, padx=10, pady=10
+        )
+
         #   Agrego los frames al notebook
         self.notebookPantallaPrincipalUsuarioLogueado.add(
             self.frame1, text="Datos De Sesion"
@@ -605,7 +699,10 @@ class acceso:
         self.notebookPantallaPrincipalUsuarioLogueado.add(
             self.frame4, text="Edicion de Tarea"
         )
-        
+        self.notebookPantallaPrincipalUsuarioLogueado.add(
+            self.frame5, text="Eliminar Tarea"
+        )
+
     def crearTarea(self):
 
         idAsinadoA = self.conexion.obtenerIdporNombreAsignadoa(
@@ -736,6 +833,17 @@ class acceso:
         print(self.calendarioVencimientolabelFrameEdicionDeTareasDatosExistente.get())
         self.conexion.actualizarTarea(datos)
         ms.showinfo("Hecho", "Tarea modificada")
+
+    def consultarTareaPorId(self):
+        resultado = self.conexion.obtenerTareaPorId(
+            (self.datoEntradaCodigolabelFrameEliminarTareas.get(),)
+        )
+        print(len(resultado))
+        if len(resultado) > 0:
+            print(resultado)
+        else:
+            ms.showerror("Error", "No existe tarea con ese id")
+            self.entradaCodigolabelFrameEliminarTareas.delete(0, END)
 
 
 aplicacion = acceso()
