@@ -863,8 +863,10 @@ class acceso:
 
     def eliminarTareas(self):
         print(self.datoEntradaCodigolabelFrameEliminarTareas.get())
-
-        pass
+        self.conexion.eliminarTareaPorId(
+            (self.datoEntradaCodigolabelFrameEliminarTareas.get(),)
+        )
+        ms.showinfo("Hecho", "Tarea eliminada")
 
 
 aplicacion = acceso()

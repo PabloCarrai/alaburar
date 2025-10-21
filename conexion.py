@@ -316,3 +316,19 @@ class conexion:
         finally:
             #   Cierro la conexion
             conexion.close()
+
+    def eliminarTareaPorId(self,datos):
+        #   Traigo el nombre del usuario en base a su id en usuarios
+        try:
+            #   Abro la conexion
+            conexion = self.abrir()
+            #   Genero el cursor
+            mycursor = conexion.cursor()
+            #   Busco los nombres en base al id
+            mycursor.execute("delete from tareas where id=?", datos)
+            #   Ejecuto los cambios
+            conexion.commit()
+        finally:
+            #   Cierro la conexion
+            conexion.close()
+        pass
