@@ -309,12 +309,10 @@ class conexion:
             #   Genero el cursor
             mycursor = conexion.cursor()
             #   Busco Tarea por id
-            mycursor.execute("select titulo,descripcion,usuarios.nombre from tareas join usuarios on tareas.id=usuarios.id where tareas.id=?", datos)
+            mycursor.execute("select t.titulo,t.descripcion,u.nombre from tareas t left join usuarios u on t.id_asignado=u.id where t.id=?", datos)
             info = mycursor.fetchall()
             #   Retorno la info
             return info
-
-
         finally:
             #   Cierro la conexion
             conexion.close()

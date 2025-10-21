@@ -182,7 +182,6 @@ class acceso:
 
         #   Chequeo que no haya alguna entrada vacia
         if len(nombre) == 0 or len(correo) == 0 or len(clave) == 0 or len(clave1) == 0:
-            print("Esta vacio")
             ms.showwarning("Error", "Hay campos vacios o mal cargados")
         else:
             #   Tengo que chequer antes que nada que el correo no exista.
@@ -680,7 +679,9 @@ class acceso:
         )
 
         self.botonEliminarTarealabelFrameEliminarTareasListadoTareas = Button(
-            self.labelFrameEliminarTareasListadoTareas, text="Eliminar"
+            self.labelFrameEliminarTareasListadoTareas,
+            text="Eliminar",
+            command=self.eliminarTareas,
         )
         self.botonEliminarTarealabelFrameEliminarTareasListadoTareas.grid(
             column=1, row=3, padx=10, pady=10
@@ -829,8 +830,6 @@ class acceso:
             idEstado[0][0],
             self.datoEntradaCodigoLabelFrameEdicionDeTareas.get(),
         )
-        print(datos)
-        print(self.calendarioVencimientolabelFrameEdicionDeTareasDatosExistente.get())
         self.conexion.actualizarTarea(datos)
         ms.showinfo("Hecho", "Tarea modificada")
 
@@ -838,12 +837,34 @@ class acceso:
         resultado = self.conexion.obtenerTareaPorId(
             (self.datoEntradaCodigolabelFrameEliminarTareas.get(),)
         )
-        print(len(resultado))
         if len(resultado) > 0:
-            print(resultado)
+            titulo = resultado[0][0]
+            descripcion = resultado[0][1]
+            asignadoa = resultado[0][2]
+            self.datoEtiquetaTituloTarealabelFrameEliminarTareasListadoTareas.config(
+                text=titulo
+            )
+            self.datoEtiquetaDescripcionTarealabelFrameEliminarTareasListadoTareas.config(
+                text=descripcion
+            )
+            self.datoEtiquetaAsignadoAlabelFrameEliminarTareasListadoTareas.config(
+                text=asignadoa
+            )
+            self.botonEliminarTarealabelFrameEliminarTareasListadoTareas.config(
+                state="normal"
+            )
+
         else:
             ms.showerror("Error", "No existe tarea con ese id")
             self.entradaCodigolabelFrameEliminarTareas.delete(0, END)
+            self.botonEliminarTarealabelFrameEliminarTareasListadoTareas.config(
+                state="disabled"
+            )
+
+    def eliminarTareas(self):
+        print(self.datoEntradaCodigolabelFrameEliminarTareas.get())
+
+        pass
 
 
 aplicacion = acceso()
