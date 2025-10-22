@@ -10,11 +10,12 @@ from datetime import datetime
 class acceso:
     def __init__(self):
         self.ventana = Tk()
+        self.erroresDeIntentoDeAcceso = 0
 
         # Objeto con la conexion
         self.conexion = conexion.conexion()
         self.ventana.title("Bienvenido a Alaburar")
-        self.ventana.geometry("300x170")
+        self.ventana.geometry("310x250")
         # #   Ponerle el icono
         icono = PhotoImage(file="/home/ed/alaburar/icono-app.png")
         self.ventana.iconphoto(True, icono)
@@ -52,15 +53,33 @@ class acceso:
             self.labelFramePantallaLogin, text="Ingresar", command=self.existeUsuario
         )
         #   Boton Ingresar Pantalla Login
-        self.botonIngresarPantallaLogin.grid(column=0, row=3, padx=10, pady=10)
+        self.botonIngresarPantallaLogin.grid(column=0, row=5, padx=10, pady=10)
         self.botonRegistrarUsuarioPantallaLogin = Button(
             self.labelFramePantallaLogin,
             text="Registrarse",
             command=self.pantallaRegistroUsuario,
         )
-        self.botonRegistrarUsuarioPantallaLogin.grid(column=1, row=3, padx=10, pady=10)
+        self.botonRegistrarUsuarioPantallaLogin.grid(column=1, row=5, padx=10, pady=10)
+
+        self.datacheckbuttonForMostrarOcultarClave = IntVar()
+        self.checkbuttonForMostrarOcultarClave = Checkbutton(
+            self.labelFramePantallaLogin,
+            text="Mostrar/Ocutar clave",
+            variable=self.datacheckbuttonForMostrarOcultarClave,
+            onvalue=1,
+            offvalue=0,
+            command=self.mostrarClave,
+        )
+        self.checkbuttonForMostrarOcultarClave.grid(column=1, row=4, padx=10, pady=10)
 
         self.ventana.mainloop()
+
+    def mostrarClave(self):
+        if self.datacheckbuttonForMostrarOcultarClave.get() == 1:
+            self.entradaClavePantallaLogin.config(show="*")
+        else:
+            if self.datacheckbuttonForMostrarOcultarClave.get() == 0:
+                self.entradaClavePantallaLogin.config(show="")
 
     def pantallaRegistroUsuario(self):
         #   Levantamos una pantalla para el login
@@ -115,7 +134,8 @@ class acceso:
         self.datoEntradaClavePantallaRegistroUsuario = StringVar()
         self.entradaClavePantallaRegistroUsuario = Entry(
             self.labelFramePantallaRegistroUsuario,
-            textvariable=self.datoEntradaClavePantallaRegistroUsuario,show="*"
+            textvariable=self.datoEntradaClavePantallaRegistroUsuario,
+            show="*",
         )
         self.entradaClavePantallaRegistroUsuario.grid(column=1, row=2, padx=10, pady=10)
         self.etiquetaClave1PantallaRegistroUsuario = Label(
@@ -128,7 +148,8 @@ class acceso:
         self.datoEntradaClave1PantallaRegistroUsuario = StringVar()
         self.entradaClave1PantallaRegistroUsuario = Entry(
             self.labelFramePantallaRegistroUsuario,
-            textvariable=self.datoEntradaClave1PantallaRegistroUsuario,show="*"
+            textvariable=self.datoEntradaClave1PantallaRegistroUsuario,
+            show="*",
         )
         self.entradaClave1PantallaRegistroUsuario.grid(
             column=1, row=3, padx=10, pady=10
@@ -174,6 +195,9 @@ class acceso:
             #   Limpio los entry de correo y clave.
             self.entradaCorreoPantallaLogin.delete(0, END)
             self.entradaClavePantallaLogin.delete(0, END)
+            self.erroresDeIntentoDeAcceso = self.erroresDeIntentoDeAcceso + 1
+            if self.erroresDeIntentoDeAcceso > 2:
+                self.ventana.destroy()
 
     def registrarUsuario(self):
         #   Guardo el contenido de las entradas en variables
