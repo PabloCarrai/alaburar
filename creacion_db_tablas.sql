@@ -52,13 +52,3 @@ CREATE TABLE tareas (
 );
 
 
-CREATE TABLE comentarios (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    id_tarea INT NOT NULL,
-    id_usuario INT NOT NULL,
-    comentario TEXT NOT NULL,
-    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_tarea) REFERENCES tareas(id),
-    FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
-);
-
