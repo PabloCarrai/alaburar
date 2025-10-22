@@ -115,7 +115,7 @@ class acceso:
         self.datoEntradaClavePantallaRegistroUsuario = StringVar()
         self.entradaClavePantallaRegistroUsuario = Entry(
             self.labelFramePantallaRegistroUsuario,
-            textvariable=self.datoEntradaClavePantallaRegistroUsuario,
+            textvariable=self.datoEntradaClavePantallaRegistroUsuario,show="*"
         )
         self.entradaClavePantallaRegistroUsuario.grid(column=1, row=2, padx=10, pady=10)
         self.etiquetaClave1PantallaRegistroUsuario = Label(
@@ -128,7 +128,7 @@ class acceso:
         self.datoEntradaClave1PantallaRegistroUsuario = StringVar()
         self.entradaClave1PantallaRegistroUsuario = Entry(
             self.labelFramePantallaRegistroUsuario,
-            textvariable=self.datoEntradaClave1PantallaRegistroUsuario,
+            textvariable=self.datoEntradaClave1PantallaRegistroUsuario,show="*"
         )
         self.entradaClave1PantallaRegistroUsuario.grid(
             column=1, row=3, padx=10, pady=10
@@ -219,8 +219,8 @@ class acceso:
         self.notebookPantallaPrincipalUsuarioLogueado.grid(padx=10, pady=10)
         #   Aca defino los frame para cada seccion(este es para datos de sesion)
         self.frame1 = ttk.Frame(self.notebookPantallaPrincipalUsuarioLogueado)
-        #   Defino el labelframe para datos de session
-        self.labelframeDatosDeSesion = LabelFrame(self.frame1, text="Datos de Session")
+        #   Defino el labelframe para datos de sesion
+        self.labelframeDatosDeSesion = LabelFrame(self.frame1, text="Datos de Sesion")
         self.labelframeDatosDeSesion.grid(column=0, row=0, padx=10, pady=10)
         #   Agrego una etiqueta id Usuario
         self.etiquetaidUsuarioLogueadoLabelFrameDatosDeSesion = Label(

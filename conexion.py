@@ -9,30 +9,6 @@ class conexion:
         except:
             print("Error al conectar a la db SQlite3")
 
-    # def crear_tablas(self):
-    #     try:
-    #         conexion = self.abrir()
-    #         mycursor = conexion.cursor()
-    #         sql = "CREATE TABLE usuarios (id INT AUTO_INCREMENT PRIMARY KEY,nombre VARCHAR(100) NOT NULL,email VARCHAR(100) NOT NULL UNIQUE,contrasena VARCHAR(255) NOT NULL,fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP)"
-    #         mycursor.execute(sql)
-    #         sql = "CREATE TABLE estados_tarea (id INT AUTO_INCREMENT PRIMARY KEY,nombre VARCHAR(50) NOT NULL UNIQUE)"
-    #         mycursor.execute(sql)
-    #         sql = "INSERT INTO estados_tarea (nombre) VALUES ('Pendiente'),('En Progreso'),('Completada'),('Cancelada')"
-    #         mycursor.execute(sql)
-    #         sql = "CREATE TABLE prioridades_tarea (id INT AUTO_INCREMENT PRIMARY KEY,nombre VARCHAR(50) NOT NULL UNIQUE)"
-    #         mycursor.execute(sql)
-    #         sql = "INSERT INTO prioridades_tarea (nombre) VALUES ('Baja'),('Media'),('Alta')"
-    #         mycursor.execute(sql)
-    #         sql = "CREATE TABLE tareas (id INT AUTO_INCREMENT PRIMARY KEY, titulo VARCHAR(255) NOT NULL, descripcion TEXT, fecha_vencimiento DATE, fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP, id_creador INT NOT NULL, id_asignado INT, id_estado INT NOT NULL, id_prioridad INT NOT NULL, FOREIGN KEY (id_creador) REFERENCES usuarios(id), FOREIGN KEY (id_asignado) REFERENCES usuarios(id), FOREIGN KEY (id_estado) REFERENCES estados_tarea(id),FOREIGN KEY (id_prioridad) REFERENCES prioridades_tarea(id))"
-    #         mycursor.execute(sql)
-    #         sql = "CREATE TABLE comentarios (id INT AUTO_INCREMENT PRIMARY KEY, id_tarea INT NOT NULL, id_usuario INT NOT NULL, comentario TEXT NOT NULL, fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (id_tarea) REFERENCES tareas(id), FOREIGN KEY (id_usuario) REFERENCES usuarios(id))"
-    #         mycursor.execute(sql)
-    #         conexion.commit()
-    #     except sqlite3.OperationalError as er:
-    #         print(f"{er}")
-    #     finally:
-    #         conexion.close()
-
     def consultarUsuario(self, datos):
         #   Uso try por si falla algo
         try:
