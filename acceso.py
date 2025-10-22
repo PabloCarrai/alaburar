@@ -866,7 +866,6 @@ class acceso:
             )
 
     def eliminarTareas(self):
-        print(self.datoEntradaCodigolabelFrameEliminarTareas.get())
         self.conexion.eliminarTareaPorId(
             (self.datoEntradaCodigolabelFrameEliminarTareas.get(),)
         )
