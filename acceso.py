@@ -76,10 +76,10 @@ class acceso:
 
     def mostrarClave(self):
         if self.datacheckbuttonForMostrarOcultarClave.get() == 1:
-            self.entradaClavePantallaLogin.config(show="*")
+            self.entradaClavePantallaLogin.config(show="")
         else:
             if self.datacheckbuttonForMostrarOcultarClave.get() == 0:
-                self.entradaClavePantallaLogin.config(show="")
+                self.entradaClavePantallaLogin.config(show="*")
 
     def pantallaRegistroUsuario(self):
         #   Levantamos una pantalla para el login
