@@ -15,9 +15,9 @@ class acceso:
         self.conexion = conexion.conexion()
         self.ventana.title("Bienvenido a Alaburar")
         self.ventana.geometry("300x170")
-        #   Ponerle el icono
-        icono = PhotoImage(file="icono-app.png")
-        self.ventana.iconphoto(True, icono)
+        # #   Ponerle el icono
+        # icono = PhotoImage(file="icono-app.png")
+        # self.ventana.iconphoto(True, icono)
 
         #   Labelframe de la ventana de login
         self.labelFramePantallaLogin = LabelFrame(self.ventana, text="Datos de Acceso:")

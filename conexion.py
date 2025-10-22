@@ -331,4 +331,3 @@ class conexion:
         finally:
             #   Cierro la conexion
             conexion.close()
-        pass
