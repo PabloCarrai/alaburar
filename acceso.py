@@ -186,8 +186,13 @@ class acceso:
                 self.nombreUsuarioLogueado = i[1]
                 #   Correo
                 self.correoUsuarioLogueado = i[2]
-            #   Acceso a la pantalla principal para usuario logueados
-            self.pantallaUsuarioLogueado()
+
+            #   Acceso a admin
+            if self.idUsuarioLogueado == 12:
+                self.pantallaUsuarioAdmin()
+            else:
+                #   Acceso a la pantalla principal para usuario logueados
+                self.pantallaUsuarioLogueado()
         else:
             ms.showerror(
                 "Problemas", "No tengo a ningun usuario registrado con esos datos"
@@ -894,6 +899,149 @@ class acceso:
             (self.datoEntradaCodigolabelFrameEliminarTareas.get(),)
         )
         ms.showinfo("Hecho", "Tarea eliminada")
+
+    def pantallaUsuarioAdmin(self):
+        self.ventanaPantallaAdmin = Toplevel()
+        self.labelframeUsuarioAdmin = LabelFrame(
+            self.ventanaPantallaAdmin, text="ABM-Usuarios"
+        )
+        self.labelframeUsuarioAdmin.grid(column=0, row=0, padx=10, pady=10)
+        self.botonAltaUsuariolabelframeUsuarioAdmin = Button(
+            self.labelframeUsuarioAdmin,
+            text="Alta Usuario",
+            command=self.pantallaRegistroUsuario,
+        )
+        self.botonAltaUsuariolabelframeUsuarioAdmin.grid(
+            column=0, row=0, padx=10, pady=10
+        )
+        self.botonBajaUsuariolabelframeUsuarioAdmin = Button(
+            self.labelframeUsuarioAdmin, text="Baja Usuario", command=self.bajaUsuario
+        )
+        self.botonBajaUsuariolabelframeUsuarioAdmin.grid(
+            column=1, row=0, padx=10, pady=10
+        )
+
+        self.botonListadoUsuariolabelframeUsuarioAdmin = Button(
+            self.labelframeUsuarioAdmin,
+            text="Listado Usuario",
+            command=self.listar_Usuario,
+        )
+        self.botonListadoUsuariolabelframeUsuarioAdmin.grid(
+            column=0, row=1, padx=10, pady=10
+        )
+
+        self.botonModificacionUsuariolabelframeUsuarioAdmin = Button(
+            self.labelframeUsuarioAdmin, text="Mod. Usuario"
+        )
+        self.botonModificacionUsuariolabelframeUsuarioAdmin.grid(
+            column=1, row=1, padx=10, pady=10
+        )
+
+    def editar_Usuario(self):
+        pass
+
+    def listar_Usuario(self):
+        self.ventanaListadoUsuarios = Toplevel()
+        self.labelframeListadoUsuarios = LabelFrame(
+            self.ventanaListadoUsuarios, text="Listado de Usuarios"
+        )
+        self.labelframeListadoUsuarios.grid(column=0, row=0, padx=10, pady=10)
+        self.botonListarlabelframeListadoUsuarios = Button(
+            self.labelframeListadoUsuarios,
+            text="Listado de Usuario",
+            command=self.insertarDatosListarUsuarios,
+        )
+        self.botonListarlabelframeListadoUsuarios.grid(
+            column=0, row=0, padx=10, pady=10
+        )
+        self.treeviewlabelframeListadoUsuarios = ttk.Treeview(
+            self.labelframeListadoUsuarios,
+            columns=("Id", "Nombre", "Correo"),
+            show="headings",
+        )
+        self.treeviewlabelframeListadoUsuarios.grid(column=0, row=1, padx=10, pady=10)
+        self.treeviewlabelframeListadoUsuarios.heading("Id", text="Id")
+        self.treeviewlabelframeListadoUsuarios.heading("Nombre", text="Nombre")
+        self.treeviewlabelframeListadoUsuarios.heading("Correo", text="Correo")
+
+    def modificar_Usuario(self):
+        pass
+
+    def insertarDatosListarUsuarios(self):
+        resultados = self.conexion.mostrarListaUsuario()
+        for items in self.treeviewlabelframeListadoUsuarios.get_children():
+            self.treeviewlabelframeListadoUsuarios.delete(items)
+        for id, nombre, email in resultados:
+            self.treeviewlabelframeListadoUsuarios.insert(
+                "", "end", values=f"{id} {nombre} {email}"
+            )
+
+    def bajaUsuario(self):
+        self.ventanaBajaUsuario = Toplevel()
+        self.labelframeBajaUsuario = LabelFrame(
+            self.ventanaBajaUsuario, text="Listar usuarios"
+        )
+        self.labelframeBajaUsuario.grid(column=0, row=0, padx=10, pady=10)
+
+        self.etiquetaCodigoUsuariolabelframeBajaUsuario = Label(
+            self.labelframeBajaUsuario, text="Codigo"
+        )
+        self.etiquetaCodigoUsuariolabelframeBajaUsuario.grid(
+            column=0, row=0, padx=10, pady=10
+        )
+
+        self.datoEntradaCodigoUsuariolabelframeBajaUsuario = StringVar()
+        self.entradaCodigoUsuariolabelframeBajaUsuario = Entry(
+            self.labelframeBajaUsuario,
+            textvariable=self.datoEntradaCodigoUsuariolabelframeBajaUsuario,
+        )
+        self.entradaCodigoUsuariolabelframeBajaUsuario.grid(
+            column=1, row=0, padx=10, pady=10
+        )
+
+        self.botonBuscarUsuarioCodigolabelframeBajaUsuario = Button(
+            self.labelframeBajaUsuario, text="Buscar Usuario"
+        )
+        self.botonBuscarUsuarioCodigolabelframeBajaUsuario.grid(
+            column=1, row=1, padx=10, pady=10
+        )
+
+        #   nombre,correo,clave
+        self.etiquetaNombrelabelframeBajaUsuario = Label(
+            self.labelframeBajaUsuario, text="Nombre"
+        )
+        self.etiquetaNombrelabelframeBajaUsuario.grid(column=0, row=2, padx=10, pady=10)
+
+        self.datoEntradaNombrelabelframeBajaUsuario = StringVar()
+        self.entradaNombrelabelframeBajaUsuario = Entry(
+            self.labelframeBajaUsuario,
+            textvariable=self.datoEntradaNombrelabelframeBajaUsuario,
+        )
+        self.entradaNombrelabelframeBajaUsuario.grid(column=1, row=2, padx=10, pady=10)
+
+        self.etiquetaCorreolabelframeBajaUsuario = Label(
+            self.labelframeBajaUsuario, text="Correo"
+        )
+        self.etiquetaCorreolabelframeBajaUsuario.grid(column=0, row=3, padx=10, pady=10)
+
+        self.datoEntradaCorreolabelframeBajaUsuario = StringVar()
+        self.entradaCorreolabelframeBajaUsuario = Entry(
+            self.labelframeBajaUsuario,
+            textvariable=self.datoEntradaCorreolabelframeBajaUsuario,
+        )
+        self.entradaCorreolabelframeBajaUsuario.grid(column=1, row=3, padx=10, pady=10)
+
+        self.etiquetaClavelabelframeBajaUsuario = Label(
+            self.labelframeBajaUsuario, text="Clave"
+        )
+        self.etiquetaClavelabelframeBajaUsuario.grid(column=0, row=4, padx=10, pady=10)
+
+        self.datoEntradaClavelabelframeBajaUsuario = StringVar()
+        self.entradaClavelabelframeBajaUsuario = Entry(
+            self.labelframeBajaUsuario,
+            textvariable=self.datoEntradaClavelabelframeBajaUsuario,
+        )
+        self.entradaClavelabelframeBajaUsuario.grid(column=1, row=4, padx=10, pady=10)
 
 
 aplicacion = acceso()

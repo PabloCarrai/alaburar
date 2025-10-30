@@ -307,3 +307,21 @@ class conexion:
         finally:
             #   Cierro la conexion
             conexion.close()
+
+    def mostrarListaUsuario(self):
+        #   Consulta para traerme el listado de los usuarios existentes
+        try:
+            #   Abro la conexion
+            conexion = self.abrir()
+            #   genero el cursor
+            mycursor = conexion.cursor()
+            #   Elijo todos los nombres existentes en la tabla usuarios
+            sql = "select id,nombre,email from usuarios"
+            mycursor.execute(sql)
+            #   Corro la consulta
+            info = mycursor.fetchall()
+            #   Devuelvo la info
+            return info
+        finally:
+            #   Cierro la conexion
+            conexion.close()        
