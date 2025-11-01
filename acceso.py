@@ -1000,7 +1000,9 @@ class acceso:
         )
 
         self.botonBuscarUsuarioCodigolabelframeBajaUsuario = Button(
-            self.labelframeBajaUsuario, text="Buscar Usuario"
+            self.labelframeBajaUsuario,
+            text="Buscar Usuario",
+            command=self.buscarUsuarioPorCodigo,
         )
         self.botonBuscarUsuarioCodigolabelframeBajaUsuario.grid(
             column=1, row=1, padx=10, pady=10
@@ -1042,6 +1044,43 @@ class acceso:
             textvariable=self.datoEntradaClavelabelframeBajaUsuario,
         )
         self.entradaClavelabelframeBajaUsuario.grid(column=1, row=4, padx=10, pady=10)
+        self.botonEliminarUsuariolabelframeBajaUsuario = Button(
+            self.labelframeBajaUsuario,
+            text="Eliminar Usuario",
+            command=self.eliminarUsuarioPorID,
+        )
+        self.botonEliminarUsuariolabelframeBajaUsuario.grid(
+            column=1, row=5, padx=10, pady=10
+        )
+
+    def buscarUsuarioPorCodigo(self):
+        "nombre,correo,clave"
+        codigo = self.datoEntradaCodigoUsuariolabelframeBajaUsuario.get()
+        resultado = self.conexion.mostrarDatosActualesUsuario((codigo,))
+        if len(resultado) == 0:
+            ms.showinfo(
+                "Error", "No tenemos usuario con ese id. Busquelo en lista usuarios"
+            )
+        else:
+            for nombre, correo, clave in resultado:
+                self.entradaNombrelabelframeBajaUsuario.delete(0, END)
+                self.entradaNombrelabelframeBajaUsuario.insert(0, nombre)
+                self.entradaCorreolabelframeBajaUsuario.delete(0, END)
+                self.entradaCorreolabelframeBajaUsuario.insert(0, correo)
+                self.entradaClavelabelframeBajaUsuario.delete(0, END)
+                self.entradaClavelabelframeBajaUsuario.insert(0, clave)
+
+    def eliminarUsuarioPorID(self):
+        if len(self.datoEntradaCodigoUsuariolabelframeBajaUsuario.get()) == 0:
+            ms.showinfo("Error", "Revise el dato del codigo del usuario")
+        else:
+            self.conexion.eliminarUsuarioPorId(
+                (self.datoEntradaCodigoUsuariolabelframeBajaUsuario.get(),)
+            )
+            ms.showinfo("Adios", "Eliminamos dicho usuario")
+            self.entradaNombrelabelframeBajaUsuario.delete(0, END)
+            self.entradaCorreolabelframeBajaUsuario.delete(0, END)
+            self.entradaClavelabelframeBajaUsuario.delete(0, END)
 
 
 aplicacion = acceso()

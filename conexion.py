@@ -270,14 +270,17 @@ class conexion:
             #   Genero el cursor
             mycursor = conexion.cursor()
             #   Busco los nombres en base al id
-            mycursor.execute("update tareas set titulo=?, descripcion=?,fecha_vencimiento=?,id_creador=?,id_asignado=?,id_estado=? where id=?", datos)
+            mycursor.execute(
+                "update tareas set titulo=?, descripcion=?,fecha_vencimiento=?,id_creador=?,id_asignado=?,id_estado=? where id=?",
+                datos,
+            )
             #   Ejecuto los cambios
             conexion.commit()
         finally:
             #   Cierro la conexion
             conexion.close()
 
-    def obtenerTareaPorId(self,datos):
+    def obtenerTareaPorId(self, datos):
         #   Traigo el nombre del usuario en base a su id en usuarios
         try:
             #   Abro la conexion
@@ -285,7 +288,10 @@ class conexion:
             #   Genero el cursor
             mycursor = conexion.cursor()
             #   Busco Tarea por id
-            mycursor.execute("select t.titulo,t.descripcion,u.nombre from tareas t left join usuarios u on t.id_asignado=u.id where t.id=?", datos)
+            mycursor.execute(
+                "select t.titulo,t.descripcion,u.nombre from tareas t left join usuarios u on t.id_asignado=u.id where t.id=?",
+                datos,
+            )
             info = mycursor.fetchall()
             #   Retorno la info
             return info
@@ -293,7 +299,7 @@ class conexion:
             #   Cierro la conexion
             conexion.close()
 
-    def eliminarTareaPorId(self,datos):
+    def eliminarTareaPorId(self, datos):
         #   Traigo el nombre del usuario en base a su id en usuarios
         try:
             #   Abro la conexion
@@ -324,4 +330,38 @@ class conexion:
             return info
         finally:
             #   Cierro la conexion
-            conexion.close()        
+            conexion.close()
+
+    def mostrarDatosActualesUsuario(self, datos):
+        #   Consulta para traerme el listado de los usuarios existentes
+        try:
+            #   Abro la conexion
+            conexion = self.abrir()
+            #   genero el cursor
+            mycursor = conexion.cursor()
+            #   Elijo todos los nombres existentes en la tabla usuarios
+            sql = "select nombre,email,contrasena from usuarios where id=?"
+            mycursor.execute(sql, datos)
+            #   Corro la consulta
+            info = mycursor.fetchall()
+            #   Devuelvo la info
+            return info
+        finally:
+            #   Cierro la conexion
+            conexion.close()
+
+    def eliminarUsuarioPorId(self, datos):
+        #   Traigo el nombre del usuario en base a su id en usuarios
+        try:
+            #   Abro la conexion
+            conexion = self.abrir()
+            #   Genero el cursor
+            mycursor = conexion.cursor()
+            #   Busco los nombres en base al id
+            mycursor.execute("delete from usuarios where id=?", datos)
+            #   Ejecuto los cambios
+            conexion.commit()
+        finally:
+            #   Cierro la conexion
+            conexion.close()
+        pass
