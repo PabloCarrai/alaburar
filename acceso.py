@@ -931,14 +931,13 @@ class acceso:
         )
 
         self.botonModificacionUsuariolabelframeUsuarioAdmin = Button(
-            self.labelframeUsuarioAdmin, text="Mod. Usuario"
+            self.labelframeUsuarioAdmin,
+            text="Mod. Usuario",
+            command=self.modificar_Usuario,
         )
         self.botonModificacionUsuariolabelframeUsuarioAdmin.grid(
             column=1, row=1, padx=10, pady=10
         )
-
-    def editar_Usuario(self):
-        pass
 
     def listar_Usuario(self):
         self.ventanaListadoUsuarios = Toplevel()
@@ -965,7 +964,107 @@ class acceso:
         self.treeviewlabelframeListadoUsuarios.heading("Correo", text="Correo")
 
     def modificar_Usuario(self):
-        pass
+        self.ventanaModificarUsuario = Toplevel()
+        self.labelFrameModificarUsuario = LabelFrame(
+            self.ventanaModificarUsuario, text="Id Usuario"
+        )
+        self.labelFrameModificarUsuario.grid(column=0, row=0, padx=10, pady=10)
+
+        self.etiquetaCodigolabelFrameModificarUsuario = Label(
+            self.labelFrameModificarUsuario, text="Id:"
+        )
+        self.etiquetaCodigolabelFrameModificarUsuario.grid(
+            column=0, row=0, padx=10, pady=10
+        )
+
+        self.datoEntradaCodigolabelFrameModificarUsuario = StringVar()
+        self.entradaCodigolabelFrameModificarUsuario = Entry(
+            self.labelFrameModificarUsuario,
+            textvariable=self.datoEntradaCodigolabelFrameModificarUsuario,
+        )
+        self.entradaCodigolabelFrameModificarUsuario.grid(
+            column=1, row=0, padx=10, pady=10
+        )
+
+        self.botonBuscarUsuarioPorID = Button(
+            self.labelFrameModificarUsuario,
+            text="Buscar",
+            command=self.buscarUsuarioPorCodigoModificarUsuario,
+        )
+        self.botonBuscarUsuarioPorID.grid(column=1, row=1, padx=10, pady=10)
+
+        self.labelFrameModificarUsuarioDatos = LabelFrame(
+            self.ventanaModificarUsuario, text="Datos"
+        )
+        self.labelFrameModificarUsuarioDatos.grid(column=0, row=1, padx=10, pady=10)
+        # clave
+        self.etiquetaNombrelabelFrameModificarUsuarioDatos = Label(
+            self.labelFrameModificarUsuarioDatos, text="Nombre"
+        )
+        self.etiquetaNombrelabelFrameModificarUsuarioDatos.grid(
+            column=0, row=0, padx=10, pady=10
+        )
+        self.datosEntradaNombrelabelFrameModificarUsuarioDatos = StringVar()
+        self.entradaNombrelabelFrameModificarUsuarioDatos = Entry(
+            self.labelFrameModificarUsuarioDatos,
+            textvariable=self.datosEntradaNombrelabelFrameModificarUsuarioDatos,
+        )
+        self.entradaNombrelabelFrameModificarUsuarioDatos.grid(
+            column=1, row=0, padx=10, pady=10
+        )
+
+        self.etiquetaCorreolabelFrameModificarUsuarioDatos = Label(
+            self.labelFrameModificarUsuarioDatos, text="Correo"
+        )
+        self.etiquetaCorreolabelFrameModificarUsuarioDatos.grid(
+            column=0, row=1, padx=10, pady=10
+        )
+
+        self.datoEntradaCorreolabelFrameModificarUsuarioDatos = StringVar()
+        self.entradaCorreolabelFrameModificarUsuarioDatos = Entry(
+            self.labelFrameModificarUsuarioDatos,
+            textvariable=self.datoEntradaCorreolabelFrameModificarUsuarioDatos,
+        )
+        self.entradaCorreolabelFrameModificarUsuarioDatos.grid(
+            column=1, row=1, padx=10, pady=10
+        )
+
+        self.etiquetaClavelabelFrameModificarUsuarioDatos = Label(
+            self.labelFrameModificarUsuarioDatos, text="Clave"
+        )
+        self.etiquetaClavelabelFrameModificarUsuarioDatos.grid(
+            column=0, row=2, padx=10, pady=10
+        )
+        self.datoEntradaClavelabelFrameModificarUsuarioDatos = StringVar()
+        self.entradaClavelabelFrameModificarUsuarioDatos = Entry(
+            self.labelFrameModificarUsuarioDatos,
+            textvariable=self.datoEntradaClavelabelFrameModificarUsuarioDatos,
+        )
+        self.entradaClavelabelFrameModificarUsuarioDatos.grid(
+            column=1, row=2, padx=10, pady=10
+        )
+        self.botonActualizarlabelFrameModificarUsuarioDatos = Button(
+            self.labelFrameModificarUsuarioDatos, text="Actualizar"
+        )
+        self.botonActualizarlabelFrameModificarUsuarioDatos.grid(
+            column=1, row=3, padx=10, pady=10
+        )
+
+    def buscarUsuarioPorCodigoModificarUsuario(self):
+        codigo = self.datoEntradaCodigolabelFrameModificarUsuario.get()
+        resultado = self.conexion.mostrarDatosActualesUsuario((codigo,))
+        if len(resultado) == 0:
+            ms.showinfo(
+                "Error", "No tenemos usuario con ese id. Busquelo en lista usuarios"
+            )
+        else:
+            for nombre, correo, clave in resultado:
+                self.entradaNombrelabelFrameModificarUsuarioDatos.delete(0, END)
+                self.entradaNombrelabelFrameModificarUsuarioDatos.insert(0, nombre)
+                self.entradaCorreolabelFrameModificarUsuarioDatos.delete(0, END)
+                self.entradaCorreolabelFrameModificarUsuarioDatos.insert(0, correo)
+                self.entradaClavelabelFrameModificarUsuarioDatos.delete(0, END)
+                self.entradaClavelabelFrameModificarUsuarioDatos.insert(0, clave)
 
     def insertarDatosListarUsuarios(self):
         resultados = self.conexion.mostrarListaUsuario()
