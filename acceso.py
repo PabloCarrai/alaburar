@@ -1044,11 +1044,33 @@ class acceso:
             column=1, row=2, padx=10, pady=10
         )
         self.botonActualizarlabelFrameModificarUsuarioDatos = Button(
-            self.labelFrameModificarUsuarioDatos, text="Actualizar"
+            self.labelFrameModificarUsuarioDatos,
+            text="Actualizar",
+            command=self.actualizarUsuario,
         )
         self.botonActualizarlabelFrameModificarUsuarioDatos.grid(
             column=1, row=3, padx=10, pady=10
         )
+
+    def actualizarUsuario(self):
+        id_usuario = self.datoEntradaCodigolabelFrameModificarUsuario.get()
+        nombre = self.datosEntradaNombrelabelFrameModificarUsuarioDatos.get()
+        correo = self.datoEntradaCorreolabelFrameModificarUsuarioDatos.get()
+        clave = self.datoEntradaClavelabelFrameModificarUsuarioDatos.get()
+        datos = (nombre, correo, clave, id_usuario)
+        if len(nombre) == 0 or len(correo) == 0 or len(clave) == 0:
+            ms.showwarning("Error", "Hay campos vacios")
+        else:
+            #   Tengo que chequer antes que nada que el correo no exista.
+            correoexiste = self.conexion.correoExiste(correo)
+            #   Si correoexiste devuelve 1 es porque el correo existe. Y muestra un error
+            if correoexiste[0][0] == 1:
+                # Si el correo existe en la db muestro el error y limpio el campo para que ingrese uno nuevo
+                ms.showwarning("Error", "El correo existe.")
+            else:
+                self.conexion.actualizarUsuario(datos)
+                ms.showwarning("Ok", "Usuario Actualizado")
+                print("Putooo", nombre, correo, clave)
 
     def buscarUsuarioPorCodigoModificarUsuario(self):
         codigo = self.datoEntradaCodigolabelFrameModificarUsuario.get()
@@ -1107,7 +1129,6 @@ class acceso:
             column=1, row=1, padx=10, pady=10
         )
 
-        #   nombre,correo,clave
         self.etiquetaNombrelabelframeBajaUsuario = Label(
             self.labelframeBajaUsuario, text="Nombre"
         )
