@@ -1070,7 +1070,7 @@ class acceso:
             else:
                 self.conexion.actualizarUsuario(datos)
                 ms.showwarning("Ok", "Usuario Actualizado")
-                print("Putooo", nombre, correo, clave)
+
 
     def buscarUsuarioPorCodigoModificarUsuario(self):
         codigo = self.datoEntradaCodigolabelFrameModificarUsuario.get()
