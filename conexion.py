@@ -56,7 +56,7 @@ class conexion:
             sql = "select nombre from usuarios"
             mycursor.execute(sql)
             #   Corro la consulta
-            info = mycursor.fetchall()
+            info = [fila[0] for fila in mycursor.fetchall()]
             #   Devuelvo la info
             return info
         finally:
